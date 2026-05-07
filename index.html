@@ -318,14 +318,16 @@
   .weight-fill{height:100%;background:linear-gradient(90deg,var(--rose),var(--lavender3));transition:width 0.35s;width:0%;}
   .weight-num{font-size:10px;color:var(--muted);font-family:var(--body);white-space:nowrap;font-style:italic;font-weight:300;}
 
-  .target-ctrl{display:flex;align-items:center;gap:3px;flex-shrink:0;}
-  .tgt-btn{
-    background:none;border:1px solid var(--border);color:var(--muted2);
-    font-size:12px;width:18px;height:18px;cursor:pointer;
-    display:flex;align-items:center;justify-content:center;
-    touch-action:manipulation;flex-shrink:0;transition:background 0.12s;
+  .target-ctrl{display:flex;align-items:center;gap:2px;flex-shrink:0;}
+  .prog-sep{font-size:10px;color:var(--muted);font-family:var(--serif);font-style:italic;}
+  .prog-target-input{
+    width:46px;background:none;border:none;border-bottom:1px solid var(--border2);
+    color:var(--muted);font-family:var(--serif);font-size:10px;font-style:italic;
+    text-align:center;outline:none;padding:0;-moz-appearance:textfield;
   }
-  .tgt-btn:active{background:var(--blush3);}
+  .prog-target-input::-webkit-outer-spin-button,
+  .prog-target-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .prog-target-input:focus{border-bottom-color:var(--lavender2);color:var(--lavender);}
 
   /* ── WEIGHT INLINE (TDEE row) ── */
   .weight-inline{display:flex;align-items:center;gap:4px;flex-shrink:0;}
@@ -387,9 +389,12 @@
     <span class="prog-lbl">Deficit</span>
     <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
     <div class="target-ctrl">
-      <button class="tgt-btn" ontouchstart="" onclick="chTarget(-50)" aria-label="Lower target">−</button>
-      <span class="prog-num" id="prog-num">0 / 500</span>
-      <button class="tgt-btn" ontouchstart="" onclick="chTarget(50)" aria-label="Raise target">+</button>
+      <span class="prog-num" id="prog-deficit">0</span>
+      <span class="prog-sep"> / </span>
+      <input class="prog-target-input" id="prog-target-inp" type="number"
+        inputmode="numeric" value="500"
+        onchange="setTarget(this.value)" onblur="setTarget(this.value)"
+        onkeydown="if(event.key==='Enter'){this.blur();}"/>
     </div>
   </div>
 </div>
@@ -841,14 +846,18 @@ function update() {
   el.className   = 'sc-v' + (def < 0 ? ' over' : '');
   document.getElementById('s-pro').textContent  = Math.round(pro) + 'g';
   document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-num').textContent  = def.toLocaleString() + ' / ' + calorieTarget.toLocaleString();
+  document.getElementById('prog-deficit').textContent = def.toLocaleString();
+  const tgtInp = document.getElementById('prog-target-inp');
+  if (tgtInp && tgtInp !== document.activeElement) tgtInp.value = calorieTarget;
 }
 
 /* ══════════════════════════════════════════
    INTERACTIONS
 ══════════════════════════════════════════ */
-window.chTarget = (d) => {
-  calorieTarget = Math.max(100, Math.min(3000, calorieTarget + d));
+window.setTarget = (v) => {
+  const n = parseInt(v);
+  if (!isNaN(n) && n >= 100) { calorieTarget = Math.min(3000, n); }
+  document.getElementById('prog-target-inp').value = calorieTarget;
   saveData(); update();
 };
 
