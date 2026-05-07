@@ -621,7 +621,7 @@ const HADES_MSGS = [
 ══════════════════════════════════════════ */
 const FOODS = [];   // Madison will add her own via the custom form
 const ACTS  = [
-  {id:'tdee', name:'Base TDEE', sub:'5\'9" · 26yo · sedentary', cal:2100, always:true},
+  {id:'tdee', name:'Base TDEE', sub:'', cal:2100, always:true},
 ];
 
 /* ══════════════════════════════════════════
@@ -640,7 +640,7 @@ const hadesCol = {hades: false};
 function calcTDEE(lbs) {
   const kg  = lbs * 0.453592;
   const bmr = (10 * kg) + (6.25 * 175.26) - (5 * 26) - 161;
-  return Math.round(bmr * 1.2);
+  return Math.round(bmr * 1.55);
 }
 
 /* ══════════════════════════════════════════
@@ -892,10 +892,9 @@ window.toggleSec = (k) => {
 };
 
 window.resetAll = () => {
-  if (!confirm("Reset today's card?")) return;
-  qty={}; acts={}; custom=[]; customActs=[]; tasks=[];
-  deletedIds.clear(); deletedActIds.clear();
-  saveData(); renderMeals(); renderActs(); renderTasks();
+  if (!confirm("Reset quantities to zero? Your logged items will be kept.")) return;
+  qty={}; acts={};
+  saveData(); renderMeals(); renderActs();
 };
 
 /* ══════════════════════════════════════════
