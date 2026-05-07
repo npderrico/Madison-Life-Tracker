@@ -692,7 +692,6 @@ async function initFirebase() {
   } catch(e) {
     syncBar.textContent = 'Offline — changes saved locally only';
     syncBar.className   = 'sync-bar err';
-    loadLocal();
   }
 }
 
@@ -1030,6 +1029,7 @@ function appendMsg(role, text, id) {
 renderDate();
 renderQuote();
 renderHades();
+loadLocal();
 renderWeight();
 renderMeals();
 renderActs();
