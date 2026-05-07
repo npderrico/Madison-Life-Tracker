@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Madison's Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush:       #f7eef4;
+    --blush2:      #f0e3ed;
+    --blush3:      #e8d5e6;
+    --lavender:    #5b3f7e;
+    --lavender2:   #7a5a9e;
+    --lavender3:   #9b7dbf;
+    --rose:        #c2637a;
+    --rose-light:  #d98aa0;
+    --petal:       #e8b4c8;
+    --petal2:      #f2cedd;
+    --text:        #3a2550;
+    --muted:       #8a6a9a;
+    --muted2:      #b09ac0;
+    --border:      #d8c0d8;
+    --border2:     #c8a8cc;
+    --cream:       #fdf6fb;
+    --serif:       'Cormorant Garamond', Georgia, serif;
+    --body:        'Jost', sans-serif;
+  }
+
+  /* petal scatter background */
+  body::before {
+    content:'';
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      radial-gradient(ellipse 180px 80px at 12% 18%, rgba(194,99,122,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 140px 60px at 85% 30%, rgba(154,125,191,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 120px 55px at 55% 70%, rgba(194,99,122,0.05) 0%, transparent 70%),
+      radial-gradient(ellipse 200px 90px at 5% 85%, rgba(154,125,191,0.06) 0%, transparent 70%);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    background:var(--blush);
+    background-image:
+      repeating-linear-gradient(135deg, rgba(154,125,191,0.025) 0px, rgba(154,125,191,0.025) 1px, transparent 1px, transparent 40px),
+      repeating-linear-gradient(45deg, rgba(194,99,122,0.02) 0px, rgba(194,99,122,0.02) 1px, transparent 1px, transparent 40px);
+    color:var(--text);font-family:var(--body);font-size:16px;min-height:100vh;padding:0 0 90px;
+    position:relative;
+  }
+
+  /* ── HEADER ── */
+  header{
+    background: linear-gradient(135deg, var(--lavender) 0%, #4a2d6e 40%, #6b3d5e 100%);
+    padding:16px 16px 14px;
+    border-bottom:3px solid var(--petal);
+    position:sticky;top:0;z-index:10;
+    box-shadow:0 4px 24px rgba(91,63,126,0.22);
+  }
+  header::after{
+    content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(242,206,221,0.6),transparent);
+  }
+  .hdr-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:10px;margin-bottom:8px;}
+  .hdr-center{text-align:center;}
+  .hdr-eyebrow{
+    font-family:var(--body);font-size:8px;letter-spacing:0.28em;
+    color:var(--petal2);text-transform:uppercase;margin-bottom:4px;font-weight:300;
+  }
+  .hdr-name{
+    font-family:var(--serif);font-size:22px;color:#fdf6fb;font-weight:500;
+    letter-spacing:0.05em;white-space:nowrap;font-style:italic;
+    text-shadow:0 1px 8px rgba(91,63,126,0.4);
+  }
+  .hdr-florals{font-size:12px;opacity:0.55;margin-top:2px;letter-spacing:0.1em;}
+  .hdr-date{
+    font-family:var(--body);font-size:10px;color:var(--petal2);
+    margin-top:4px;font-weight:300;letter-spacing:0.08em;text-align:center;font-style:italic;
+  }
+
+  /* TASKS */
+  .tasks-panel{text-align:left;}
+  .panel-lbl{
+    font-size:7px;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--petal2);font-family:var(--body);margin-bottom:6px;font-weight:300;
+  }
+  .task-list{list-style:none;}
+  .task-item{display:flex;align-items:flex-start;gap:5px;margin-bottom:4px;}
+  .task-chk{
+    width:13px;height:13px;cursor:pointer;flex-shrink:0;margin-top:2px;
+    accent-color:var(--petal);
+  }
+  .task-txt{font-size:11px;color:var(--petal2);font-family:var(--body);line-height:1.3;cursor:pointer;flex:1;font-weight:300;}
+  .task-txt.done{text-decoration:line-through;color:var(--muted2);opacity:0.6;}
+  .task-add-row{display:flex;gap:4px;margin-top:6px;}
+  .task-input{
+    flex:1;background:rgba(255,255,255,0.1);border:1px solid rgba(242,206,221,0.2);
+    color:var(--petal2);font-family:var(--body);font-size:11px;padding:4px 7px;outline:none;
+    min-width:0;font-weight:300;
+  }
+  .task-input::placeholder{color:var(--muted2);font-style:italic;}
+  .task-input:focus{border-color:var(--petal);}
+  .task-go{
+    background:none;border:1px solid rgba(242,206,221,0.2);color:var(--petal);
+    font-size:14px;width:24px;height:24px;cursor:pointer;display:flex;
+    align-items:center;justify-content:center;flex-shrink:0;touch-action:manipulation;
+  }
+
+  /* QUOTE / HADES panels */
+  .quote-panel{text-align:right;}
+  .quote-text{
+    font-family:var(--serif);font-size:10.5px;color:var(--petal2);
+    line-height:1.5;font-style:italic;opacity:0.9;font-weight:300;
+  }
+  .quote-attr{
+    font-size:8.5px;color:var(--muted2);font-family:var(--body);
+    margin-top:4px;letter-spacing:0.06em;font-weight:300;
+  }
+
+  /* ── SYNC BAR ── */
+  .sync-bar{
+    text-align:center;padding:5px;font-size:10px;font-family:var(--body);
+    font-style:italic;color:var(--muted);letter-spacing:0.05em;font-weight:300;
+  }
+  .sync-bar.ok{color:var(--lavender3);}
+  .sync-bar.err{color:var(--rose);}
+
+  /* ── SCORECARD ── */
+  .card{margin:14px 14px 0;border:1px solid var(--border2);background:var(--cream);overflow:hidden;}
+  .card-header{
+    background:linear-gradient(135deg,var(--lavender) 0%,#4a2d6e 50%,#6b3d5e 100%);
+    display:grid;grid-template-columns:repeat(4,1fr);
+  }
+  .sc{padding:11px 6px 9px;text-align:center;border-right:1px solid rgba(255,255,255,0.08);}
+  .sc:last-child{border-right:none;}
+  .sc-v{font-family:var(--serif);font-size:22px;font-weight:500;color:#fdf6fb;line-height:1;margin-bottom:3px;font-style:italic;}
+  .sc-v.over{color:#f4a0c0;}
+  .sc-l{font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--petal2);font-family:var(--body);font-weight:300;}
+  .progress-row{
+    background:var(--blush2);padding:8px 14px;border-top:1px solid var(--border);
+    display:flex;align-items:center;gap:10px;
+  }
+  .prog-lbl{font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);font-family:var(--body);white-space:nowrap;font-weight:300;}
+  .prog-bar{flex:1;height:3px;background:var(--border);overflow:hidden;}
+  .prog-fill{height:100%;background:linear-gradient(90deg,var(--rose),var(--lavender3));transition:width 0.4s;}
+  .prog-num{font-size:10px;color:var(--muted);font-family:var(--serif);white-space:nowrap;font-style:italic;}
+
+  /* ── SECTIONS ── */
+  .section{margin:14px 14px 0;border:1px solid var(--border2);background:var(--cream);}
+  .sec-hdr{
+    background:linear-gradient(135deg,var(--lavender2) 0%,var(--lavender) 100%);
+    padding:9px 14px;display:flex;justify-content:space-between;align-items:center;
+    cursor:pointer;user-select:none;
+  }
+  .sec-title{
+    font-family:var(--serif);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--petal2);font-weight:400;font-style:italic;
+  }
+  .chev{color:var(--petal2);font-size:9px;transition:transform 0.2s;opacity:0.7;}
+  .sec-hdr.col .chev{transform:rotate(-90deg);}
+  .sec-body.hidden{display:none;}
+
+  /* HADES SECTION */
+  .hades-section{margin:14px 14px 0;border:1px solid var(--border2);background:var(--cream);}
+  .hades-hdr{
+    background:linear-gradient(135deg,#3d2a5e 0%,var(--lavender) 60%,var(--rose) 100%);
+    padding:9px 14px;display:flex;justify-content:space-between;align-items:center;
+    cursor:pointer;user-select:none;
+  }
+  .hades-title-wrap{display:flex;align-items:center;gap:8px;}
+  .hades-paw{font-size:14px;}
+  .hades-title{
+    font-family:var(--serif);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--petal2);font-weight:400;font-style:italic;
+  }
+  .hades-body{padding:16px 18px;background:linear-gradient(135deg,#fdf6fb 0%,#f7eef4 100%);}
+  .hades-bubble{
+    background:linear-gradient(135deg,rgba(91,63,126,0.08) 0%,rgba(194,99,122,0.06) 100%);
+    border:1px solid var(--border2);border-left:3px solid var(--rose);
+    padding:14px 16px;position:relative;
+  }
+  .hades-bubble::before{
+    content:'"';font-family:var(--serif);font-size:48px;color:var(--petal);
+    position:absolute;top:-8px;left:10px;line-height:1;opacity:0.5;
+  }
+  .hades-msg{
+    font-family:var(--serif);font-size:15px;color:var(--text);line-height:1.6;
+    font-style:italic;font-weight:400;padding-left:8px;
+  }
+  .hades-sig{
+    margin-top:10px;text-align:right;font-family:var(--body);font-size:9px;
+    color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;font-weight:300;
+  }
+
+  /* ── FOOD ROWS ── */
+  .food-row{display:flex;align-items:center;padding:10px 12px;border-bottom:1px solid var(--blush3);gap:8px;}
+  .food-row:last-child{border-bottom:none;}
+  .food-info{flex:1;min-width:0;}
+  .food-name{font-family:var(--body);font-size:14px;color:var(--text);font-weight:400;}
+  .food-sub{font-size:11px;color:var(--muted);font-style:italic;margin-top:1px;font-weight:300;}
+  .food-meta{text-align:right;flex-shrink:0;}
+  .food-cal{font-family:var(--serif);font-size:15px;color:var(--lavender);font-style:italic;}
+  .food-pro{font-size:10px;color:var(--muted2);font-style:italic;margin-top:1px;font-weight:300;}
+  .del-btn{
+    background:none;border:none;color:var(--border2);font-size:18px;cursor:pointer;
+    padding:0 2px;line-height:1;flex-shrink:0;touch-action:manipulation;transition:color 0.15s;
+  }
+  .del-btn:active{color:var(--rose);}
+  .qty-wrap{display:flex;align-items:center;gap:5px;}
+  .qty-btn{
+    width:27px;height:27px;border:1px solid var(--border2);background:var(--blush2);
+    color:var(--lavender);font-size:16px;cursor:pointer;display:flex;align-items:center;
+    justify-content:center;transition:background 0.12s;touch-action:manipulation;flex-shrink:0;
+  }
+  .qty-btn:active{background:var(--blush3);}
+  .qty-n{font-family:var(--serif);font-size:16px;min-width:18px;text-align:center;color:var(--muted2);font-style:italic;}
+  .qty-n.on{color:var(--lavender);font-weight:600;}
+
+  /* ── ACTIVITY ── */
+  .act-row{display:flex;align-items:center;padding:10px 12px;border-bottom:1px solid var(--blush3);gap:10px;cursor:pointer;}
+  .act-row:last-child{border-bottom:none;}
+  .act-chk{width:16px;height:16px;accent-color:var(--lavender2);cursor:pointer;flex-shrink:0;}
+  .act-info{flex:1;}
+  .act-name{font-family:var(--body);font-size:14px;color:var(--text);font-weight:400;}
+  .act-name.dim{color:var(--muted);font-style:italic;}
+  .act-cal{font-family:var(--serif);font-size:13px;color:var(--muted);font-style:italic;}
+  .act-del{
+    background:none;border:none;color:var(--border2);font-size:18px;cursor:pointer;
+    padding:0 2px;line-height:1;flex-shrink:0;touch-action:manipulation;transition:color 0.15s;
+  }
+  .act-del:active{color:var(--rose);}
+
+  /* ── CUSTOM ADD ── */
+  .custom-wrap{border-top:1px solid var(--border);padding:11px 12px;background:var(--blush2);}
+  .custom-fields{display:flex;gap:6px;margin-bottom:8px;}
+  .custom-fields input{
+    background:var(--cream);border:1px solid var(--border2);color:var(--text);
+    font-family:var(--body);font-size:13px;padding:7px 9px;outline:none;font-weight:300;
+  }
+  .custom-fields input:focus{border-color:var(--lavender2);}
+  .custom-fields input::placeholder{color:var(--muted2);font-style:italic;}
+  .inp-name{flex:1;}.inp-sm{width:58px;}
+  .add-btn{
+    width:100%;padding:9px;background:linear-gradient(135deg,var(--lavender) 0%,var(--rose) 100%);
+    border:none;color:var(--blush);font-family:var(--body);font-size:11px;
+    letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;font-weight:300;
+    transition:opacity 0.15s;
+  }
+  .add-btn:active{opacity:0.85;}
+
+  .reset-wrap{text-align:center;padding:16px 0 6px;}
+  .reset-btn{
+    background:none;border:none;font-family:var(--body);font-size:11px;
+    color:var(--muted2);cursor:pointer;font-style:italic;text-decoration:underline;
+    text-underline-offset:3px;font-weight:300;letter-spacing:0.04em;
+  }
+
+  /* ── CLAUDE FAB ── */
+  .claude-fab{
+    position:fixed;bottom:22px;right:18px;width:54px;height:54px;
+    background:linear-gradient(135deg,var(--lavender) 0%,var(--rose) 100%);
+    border:2px solid var(--petal);border-radius:50%;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;z-index:30;
+    box-shadow:0 4px 20px rgba(91,63,126,0.3);touch-action:manipulation;transition:transform 0.15s;
+  }
+  .claude-fab:active{transform:scale(0.93);}
+  .claude-fab svg{width:22px;height:22px;fill:var(--blush);}
+
+  /* ── DRAWER ── */
+  .drawer{
+    position:fixed;bottom:0;left:0;right:0;height:72vh;
+    background:var(--cream);
+    border-top:3px solid var(--petal);z-index:40;
+    transform:translateY(100%);transition:transform 0.32s cubic-bezier(0.32,0.72,0,1);
+    display:flex;flex-direction:column;
+  }
+  .drawer.open{transform:translateY(0);}
+  .drawer-hdr{
+    background:linear-gradient(135deg,var(--lavender) 0%,#4a2d6e 50%,#6b3d5e 100%);
+    padding:12px 14px 11px;display:flex;align-items:center;justify-content:space-between;
+    border-bottom:2px solid var(--petal);flex-shrink:0;
+  }
+  .drawer-title{font-family:var(--serif);font-size:15px;color:var(--petal2);letter-spacing:0.06em;font-style:italic;}
+  .drawer-status{font-size:10px;font-family:var(--body);color:var(--muted2);font-style:italic;font-weight:300;}
+  .drawer-close{background:none;border:none;color:var(--muted2);font-size:20px;cursor:pointer;line-height:1;padding:0 2px;touch-action:manipulation;}
+  .drawer-msgs{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;}
+  .msg{max-width:88%;padding:10px 13px;font-family:var(--body);font-size:14px;line-height:1.55;font-weight:300;}
+  .msg.user{background:linear-gradient(135deg,var(--lavender) 0%,var(--rose) 100%);color:var(--blush);align-self:flex-end;}
+  .msg.assistant{background:var(--blush2);color:var(--text);border:1px solid var(--border);align-self:flex-start;}
+  .msg.thinking{color:var(--muted);font-style:italic;font-size:13px;align-self:flex-start;padding:6px 0;background:none;border:none;}
+  .drawer-input-row{
+    flex-shrink:0;padding:10px 12px 26px;background:var(--blush2);
+    border-top:1px solid var(--border);display:flex;gap:8px;align-items:flex-end;
+  }
+  .drawer-input{
+    flex:1;background:var(--cream);border:1px solid var(--border2);color:var(--text);
+    font-family:var(--body);font-size:14px;padding:8px 10px;outline:none;resize:none;
+    max-height:90px;line-height:1.4;font-weight:300;
+  }
+  .drawer-input:focus{border-color:var(--lavender2);}
+  .drawer-input::placeholder{color:var(--muted2);font-style:italic;}
+  .drawer-send{
+    width:38px;height:38px;background:linear-gradient(135deg,var(--lavender) 0%,var(--rose) 100%);
+    border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;touch-action:manipulation;transition:opacity 0.15s;
+  }
+  .drawer-send:active{opacity:0.8;}
+  .drawer-send svg{width:15px;height:15px;fill:var(--blush);}
+  .drawer-send:disabled{opacity:0.35;cursor:default;}
+
+  /* ── WEIGHT ROW — matches Nick's progress-row pattern ── */
+  .weight-row{background:var(--blush2);padding:7px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+  .weight-lbl{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-family:var(--body);white-space:nowrap;font-weight:300;}
+  .weight-controls{display:flex;align-items:center;gap:6px;flex:1;}
+  .weight-btn{background:none;border:none;color:var(--muted);font-size:15px;cursor:pointer;padding:0 2px;line-height:1;touch-action:manipulation;transition:color 0.15s;font-family:var(--body);}
+  .weight-btn:active{color:var(--lavender);}
+  .weight-bar{flex:1;height:3px;background:var(--border);overflow:hidden;}
+  .weight-fill{height:100%;background:linear-gradient(90deg,var(--rose),var(--lavender3));transition:width 0.35s;width:0%;}
+  .weight-num{font-size:10px;color:var(--muted);font-family:var(--body);white-space:nowrap;font-style:italic;font-weight:300;}
+
+  /* floral divider decoration */
+  .floral-divider{
+    text-align:center;font-size:11px;color:var(--border2);letter-spacing:0.3em;
+    padding:2px 0;opacity:0.7;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-top">
+    <div class="tasks-panel">
+      <div class="panel-lbl">Today's Tasks</div>
+      <ul class="task-list" id="task-list"></ul>
+      <div class="task-add-row">
+        <input class="task-input" type="text" id="task-inp" placeholder="Add task…" onkeydown="taskKey(event)"/>
+        <button class="task-go" onclick="addTask()" aria-label="Add">+</button>
+      </div>
+    </div>
+    <div class="hdr-center">
+      <div class="hdr-eyebrow">Daily Log</div>
+      <div class="hdr-name">Madison's Tracker</div>
+      <div class="hdr-florals">𖦹 ✦ 𖦹</div>
+    </div>
+    <div class="quote-panel">
+      <div class="quote-text" id="quote-text"></div>
+      <div class="quote-attr" id="quote-attr"></div>
+    </div>
+  </div>
+  <div class="hdr-date" id="date-label"></div>
+</header>
+
+<div id="sync-bar" class="sync-bar">connecting…</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="sc"><div class="sc-v" id="s-in">0</div><div class="sc-l">Eaten</div></div>
+    <div class="sc"><div class="sc-v" id="s-burn">0</div><div class="sc-l">Burned</div></div>
+    <div class="sc"><div class="sc-v" id="s-def">0</div><div class="sc-l">Deficit</div></div>
+    <div class="sc"><div class="sc-v" id="s-pro">0g</div><div class="sc-l">Protein</div></div>
+  </div>
+  <div class="weight-row">
+    <span class="weight-lbl">Weight</span>
+    <div class="weight-wrap">
+      <button class="weight-btn" ontouchstart="" onclick="chWeight(-0.5)" aria-label="Decrease">−</button>
+      <span class="weight-val" id="weight-val">145.0</span>
+      <span class="weight-unit">lbs</span>
+      <button class="weight-btn" ontouchstart="" onclick="chWeight(0.5)" aria-label="Increase">+</button>
+    </div>
+    <span class="tdee-note" id="tdee-note">TDEE: 2,100</span>
+  </div>
+  <div class="progress-row">
+    <span class="prog-lbl">Target</span>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+    <span class="prog-num" id="prog-num">0 / 500</span>
+  </div>
+</div>
+
+<!-- HADES SECTION -->
+<div class="hades-section" id="sec-hades">
+  <div class="hades-hdr" onclick="toggleSec('hades')">
+    <div class="hades-title-wrap">
+      <span class="hades-paw">🐾</span>
+      <span class="hades-title">Message from Hades</span>
+    </div>
+    <span class="chev" id="chev-hades">▾</span>
+  </div>
+  <div id="body-hades">
+    <div class="hades-body">
+      <div class="hades-bubble">
+        <p class="hades-msg" id="hades-msg">Loading today's message…</p>
+      </div>
+      <div class="hades-sig">— Hades 🐾 your good boy</div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="sec-meals">
+  <div class="sec-hdr" onclick="toggleSec('meals')"><span class="sec-title">Meals &amp; Food</span><span class="chev">▾</span></div>
+  <div class="sec-body" id="body-meals"></div>
+  <div class="custom-wrap">
+    <div class="custom-fields">
+      <input class="inp-name" type="text" id="c-name" placeholder="Food item…"/>
+      <input class="inp-sm" type="number" id="c-cal" placeholder="cal" inputmode="numeric"/>
+      <input class="inp-sm" type="number" id="c-pro" placeholder="pro" inputmode="numeric"/>
+    </div>
+    <button class="add-btn" onclick="addCustom()">Add to Log</button>
+  </div>
+</div>
+
+<div class="section" id="sec-act">
+  <div class="sec-hdr" onclick="toggleSec('act')"><span class="sec-title">Activity</span><span class="chev">▾</span></div>
+  <div class="sec-body" id="body-act"></div>
+  <div class="custom-wrap">
+    <div class="custom-fields">
+      <input class="inp-name" type="text" id="a-name" placeholder="Activity…"/>
+      <input class="inp-sm" type="number" id="a-cal" placeholder="cal" inputmode="numeric"/>
+    </div>
+    <button class="add-btn" onclick="addCustomAct()">Add Activity</button>
+  </div>
+</div>
+
+<div class="reset-wrap"><button class="reset-btn" onclick="resetAll()">Reset today's card</button></div>
+
+<!-- CLAUDE FAB -->
+<button class="claude-fab" onclick="toggleDrawer()" aria-label="Ask Claude">
+  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 4C9.37 4 4 9.37 4 16s5.37 12 12 12 12-5.37 12-12S22.63 4 16 4zm5.5 8.5c.28 0 .5.22.5.5s-.22.5-.5.5-.5-.22-.5-.5.22-.5.5-.5zm-11 0c.28 0 .5.22.5.5s-.22.5-.5.5-.5-.22-.5-.5.22-.5.5-.5zM16 23c-3.18 0-5.9-1.87-7.24-4.6h14.48C21.9 21.13 19.18 23 16 23z"/>
+  </svg>
+</button>
+
+<!-- CLAUDE DRAWER -->
+<div class="drawer" id="drawer">
+  <div class="drawer-hdr">
+    <div>
+      <div class="drawer-title">Ask Claude</div>
+      <div class="drawer-status" id="drawer-status">Ready — your log is loaded as context</div>
+    </div>
+    <button class="drawer-close" onclick="toggleDrawer()" aria-label="Close">✕</button>
+  </div>
+  <div class="drawer-msgs" id="drawer-msgs">
+    <div class="msg assistant">Hello Madison! I have your current log loaded — calories, activity, tasks, everything. Ask me anything or tell me what to add.</div>
+  </div>
+  <div class="drawer-input-row">
+    <textarea class="drawer-input" id="drawer-input" rows="1" placeholder="Add a food, ask about macros, anything…" oninput="autoGrow(this)" onkeydown="drawerKey(event)"></textarea>
+    <button class="drawer-send" id="drawer-send" onclick="askClaude()" aria-label="Send">
+      <svg viewBox="0 0 24 24"><path d="M2 21L23 12 2 3v7l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script type="module">
+
+/* ══════════════════════════════════════════
+   FIREBASE CONFIG — replace with your values
+══════════════════════════════════════════ */
+const FB_CONFIG = {
+  apiKey: "REPLACE_WITH_FIREBASE_API_KEY",
+  authDomain: "REPLACE_WITH_AUTH_DOMAIN",
+  databaseURL: "REPLACE_WITH_DATABASE_URL",
+  projectId: "REPLACE_WITH_PROJECT_ID",
+  storageBucket: "REPLACE_WITH_STORAGE_BUCKET",
+  messagingSenderId: "REPLACE_WITH_SENDER_ID",
+  appId: "REPLACE_WITH_APP_ID"
+};
+
+/* ══════════════════════════════════════════
+   DOCTOR QUOTES
+══════════════════════════════════════════ */
+const QUOTES = [
+  {text:"The good physician treats the disease. The great physician treats the patient who has the disease.",attr:"William Osler"},
+  {text:"Wherever the art of medicine is loved, there is also a love of humanity.",attr:"Hippocrates"},
+  {text:"The art of medicine consists of amusing the patient while nature cures the disease.",attr:"Voltaire"},
+  {text:"To study the phenomenon of disease without books is to sail an uncharted sea, while to study books without patients is not to go to sea at all.",attr:"William Osler"},
+  {text:"Medicine is a science of uncertainty and an art of probability.",attr:"William Osler"},
+  {text:"The secret of the care of the patient is in caring for the patient.",attr:"Francis Peabody"},
+  {text:"It is much more important to know what sort of a patient has a disease than what sort of a disease a patient has.",attr:"William Osler"},
+  {text:"One of the essential qualities of the clinician is interest in humanity, for the secret of care is in caring.",attr:"Francis Peabody"},
+  {text:"Primum non nocere. First, do no harm.",attr:"Hippocratic tradition"},
+  {text:"The greatest mistake in the treatment of diseases is that there are physicians for the body and physicians for the soul, although the two cannot be separated.",attr:"Plato"},
+  {text:"Curing sometimes. Relieving often. Comforting always.",attr:"Attributed to Hippocrates"},
+  {text:"Listen to your patient. He is telling you the diagnosis.",attr:"William Osler"},
+  {text:"A physician is obligated to consider more than a diseased organ, more even than the whole man — she must view the man in his world.",attr:"Harvey Cushing"},
+  {text:"The patient is the one with the disease.",attr:"MD wisdom"},
+  {text:"Medicine is not only a science; it is also an art. It does not consist of compounding pills and plasters; it deals with the very processes of life.",attr:"Paracelsus"},
+  {text:"Every patient you see is a lesson in what you do not know.",attr:"MD wisdom"},
+  {text:"The most important thing in communication is hearing what isn't said.",attr:"Peter Drucker"},
+  {text:"Knowing is not enough; we must apply. Willing is not enough; we must do.",attr:"Goethe"},
+  {text:"The practice of medicine is an art, not a trade; a calling, not a business.",attr:"William Osler"},
+  {text:"Wherever a doctor cannot do good, she must be kept from doing harm.",attr:"Hippocrates"},
+  {text:"To do nothing is also a good remedy.",attr:"Hippocrates"},
+  {text:"Rest, rest, perturbed spirit.",attr:"Shakespeare — a reminder to rest when needed"},
+  {text:"The doctor of the future will give no medicine but will interest her patients in the care of the human frame.",attr:"Thomas Edison"},
+  {text:"Take care of your body. It's the only place you have to live.",attr:"Jim Rohn"},
+  {text:"Early to bed and early to rise, makes a man healthy, wealthy and wise.",attr:"Benjamin Franklin"},
+  {text:"He who has health has hope, and he who has hope has everything.",attr:"Arabian Proverb"},
+  {text:"The first wealth is health.",attr:"Ralph Waldo Emerson"},
+  {text:"An apple a day keeps the doctor away — but you're already the doctor.",attr:"Ancient wisdom, adapted"},
+  {text:"Let food be thy medicine and medicine be thy food.",attr:"Hippocrates"},
+  {text:"A calm and modest life brings more happiness than the pursuit of success combined with constant restlessness.",attr:"Albert Einstein"},
+  {text:"In the middle of difficulty lies opportunity — even in the hardest shift.",attr:"Albert Einstein"},
+  {text:"You are never too tired to be kind.",attr:"MD wisdom"},
+  {text:"Patients don't care how much you know until they know how much you care.",attr:"Medical school wisdom"},
+  {text:"Compassion is the basis of morality.",attr:"Arthur Schopenhauer"},
+  {text:"Do what you can, with what you have, where you are — even on the hard days.",attr:"Theodore Roosevelt"},
+];
+
+/* ══════════════════════════════════════════
+   HADES MESSAGES (100 dog thoughts)
+══════════════════════════════════════════ */
+const HADES_MSGS = [
+  "Did you eat breakfast? Because I didn't get any and I think that's deeply unfair.",
+  "I watched you leave this morning and I want you to know — I've been staring at the door since. Just so you know.",
+  "Today I discovered the laundry basket. We don't need to talk about it.",
+  "You look beautiful today. I would tell you this every day but I only speak in barks and you keep misinterpreting them as 'stop' and 'no.'",
+  "I sat in your spot on the couch for six hours. I regret nothing.",
+  "A squirrel looked at me through the window. I need therapy.",
+  "My love for you is unconditional. My love for the mailman is very, very conditional.",
+  "I think about food approximately 98% of the time. The other 2% I think about you. You are also food-adjacent.",
+  "The vacuum cleaner is still here. I'm handling it. Barely.",
+  "I have protected this house from 14 suspicious leaves today. You're welcome.",
+  "Every day without you feels like seven. I'm a dog. That's literally true.",
+  "I found a sock. I'm not going to say what happened to it.",
+  "You said 'be right back' four hours ago. I have made a note.",
+  "I think the cat next door has been giving me looks. I'm choosing peace today. For you.",
+  "I ate something in the yard. It tasted like dirt and regret. Ten out of ten.",
+  "My butt is itchy and I just want you to know that some days are like that.",
+  "You are my whole world. Not in a clingy way. Okay, in a slightly clingy way.",
+  "I dreamed about treats. It was the greatest dream of my life. I would like to discuss this.",
+  "I tilted my head at seven different things today. None of them made more sense after.",
+  "The FedEx truck came. I told it what I thought. It left. I win.",
+  "I spent forty-five minutes moving from the couch to the floor to the couch again. Do not ask me what I was thinking.",
+  "Today's vibe: gentle chaos. Tomorrow's vibe: also gentle chaos.",
+  "I have been a very good boy. Statistical evidence available upon request.",
+  "Someone walked past our house at 2:47 am. I handled it vocally. Sorry about that.",
+  "You left your pillow unguarded. I simply lay on it. I am not apologizing.",
+  "The treat jar made a sound. I came from three rooms away. I have gifts.",
+  "I do not understand thunder but I have opinions about it.",
+  "I was sitting in a patch of sun and I thought of you and it was the best moment of my day.",
+  "My tail is a direct measure of how much I love you. I've been wagging all day.",
+  "I found your shoe. It was exactly where you left it. I simply improved its texture.",
+  "There were birds on the lawn. I looked at them very sternly. They flew away. Effective.",
+  "You take such good care of everyone. Let someone take care of you today.",
+  "I love you more than fetch. That's saying a lot because I really love fetch.",
+  "My ears heard your car from the end of the street. I was ready. I am always ready.",
+  "I cannot help you with your to-do list but I can sit on your feet while you do it.",
+  "You smell like the outside world and I have many questions.",
+  "The other day I caught my own tail. I won't say it was impressive because I know what it is.",
+  "I would follow you anywhere. Including the bathroom. Especially the bathroom.",
+  "I don't fully understand what doctors do but I think you're very brave.",
+  "If I could talk I would tell you you're doing great. So consider this me telling you that.",
+  "Today I sat and stared at the wall for forty minutes. Self-reflection is important.",
+  "I have a very important message: pets please. That's the whole message.",
+  "Naps are not laziness. Naps are restoration. I have been restoring myself all day.",
+  "I watched a bug cross the entire patio. It was the most dramatic thing I've ever seen.",
+  "You are my favorite human. Don't tell the others. Actually, they're all my favorites too.",
+  "I know when you're sad. I sit closer. I don't know what sadness is but I know closer is better.",
+  "The wind smelled incredible today. I cannot describe it. You had to be there.",
+  "I protected the backyard from a rogue plastic bag for twenty full minutes. Heroic.",
+  "If you're tired today, I have a spot on the couch and I am willing to share approximately half.",
+  "Life is short. Sniff everything. This is my philosophy.",
+  "I did not eat the houseplant. Not today. I'm proud of me.",
+  "My heart is a big room and you have the biggest room in it.",
+  "You're working very hard. I see it. I'm going to need you to take a snack break.",
+  "I heard you come home and my whole body forgot every other emotion I've ever had.",
+  "The neighbor's dog said something rude. I responded professionally.",
+  "I know how to sit, stay, and spin. What more could you want from me, honestly.",
+  "I have a zoomie scheduled for 11pm. Please clear the hallway.",
+  "Every morning you leave and I genuinely think: what if she doesn't come back. Then you do. And it's perfect.",
+  "I smelled something in the park today that I still haven't fully processed.",
+  "You are doing important work. I am doing important lounging. We are a team.",
+  "I only bark at the really suspicious stuff. That cloud earlier? Suspicious.",
+  "I've been working on not jumping on people. It's going okay. Not great. Okay.",
+  "Today I sat next to you on the couch for three hours. This is my highest calling.",
+  "I have chewed one (1) unauthorized item this week. I'm growing as a person. Dog. I'm a dog.",
+  "You are my safe place. I hope you have a safe place too.",
+  "I rolled in something amazing outside. You did not share my enthusiasm. I'm over it. Mostly.",
+  "When you're having a hard day I will put my head in your lap. That's my prescription.",
+  "I know what the leash sounds like from upstairs. I know what your keys sound like. I am always listening.",
+  "I gave the houseguest the benefit of the doubt today. Personal growth.",
+  "My dream is to one day eat whatever is on the counter. I will keep you posted.",
+  "The backyard has never been so well patrolled. You're welcome, honestly.",
+  "I do not always understand the rules but I understand love and I think that's the more important one.",
+  "You forgot to give me my morning ear scratch. I have filed a formal complaint with myself.",
+  "I can tell when you're stressed. I lean against your leg on purpose. Did you notice?",
+  "A butterfly came by. I let it live. I'm feeling magnanimous today.",
+  "I got the hiccups for twenty minutes. It was humbling.",
+  "You are the best thing that ever happened to me. Second best is the squeaky duck. Close second.",
+  "My internal clock for dinnertime is flawless. More reliable than any app you have.",
+  "I have been described as 'a lot.' I prefer 'enthusiastic and loving.'",
+  "Every single time you come home is the best thing that's ever happened to me. Every time. I never get used to it.",
+  "There's a smell in the corner of the yard I haven't identified yet. This is my current project.",
+  "Sometimes I dream and my paws twitch. I am running somewhere beautiful in my dreams.",
+  "You give the best belly rubs in the world. This is an objective fact.",
+  "I sat in the window and watched for you. The neighbors probably thought I was art.",
+  "I do not know what a calorie is but I support your goals completely.",
+  "Nap with me today? I'll be the little spoon.",
+  "I got scared of my own reflection today. Do not bring it up.",
+  "My emotional support for you is a full-time job and I am committed to excellence.",
+  "You said 'good boy' this morning and I have been thinking about it ever since.",
+  "I found a sunbeam and I held it hostage for the entire afternoon.",
+  "Today I would like to go on a walk and sniff seven hundred things. Just a suggestion.",
+  "If you ever doubt yourself, remember: I chose you. And my instincts are impeccable.",
+  "I sneezed four times in a row and then looked around to see if anyone noticed. Someone should have noticed.",
+  "You have been working very hard. I have been napping very hard. We make a balanced household.",
+  "Today's reminder: you are the reason I run to the door. Every single time.",
+  "I don't know what your patients are going through but I know you probably made it a little better.",
+  "I licked your hand this morning. That was a kiss. Please accept it.",
+  "We are going to have a great day today. I have decided. It is done.",
+  "I love you so much it comes out of my tail.",
+];
+
+/* ══════════════════════════════════════════
+   FOOD DATA — empty by default for Madison to populate
+══════════════════════════════════════════ */
+const FOODS = [];   // Madison will add her own via the custom form
+const ACTS  = [
+  {id:'tdee', name:'Base TDEE', sub:"5\'9\" · 26yo · daily burn", cal:2100, always:true},
+];
+
+/* ══════════════════════════════════════════
+   STATE
+══════════════════════════════════════════ */
+let custom=[], qty={}, acts={}, col={}, tasks=[], customActs=[];
+const deletedIds    = new Set();
+const deletedActIds = new Set();
+let chatHistory=[], fbDb=null, fbRef=null, drawerOpen=false, sending=false;
+let weightLbs = 145.0;  // default starting weight
+const TODAY = new Date().toDateString();
+const hadesCol = {hades: false};
+
+/* Mifflin-St Jeor BMR for female, sedentary TDEE (×1.2)
+   Height fixed: 5'9" = 175.26 cm, Age: 26 */
+function calcTDEE(lbs) {
+  const kg  = lbs * 0.453592;
+  const bmr = (10 * kg) + (6.25 * 175.26) - (5 * 26) - 161;
+  return Math.round(bmr * 1.2);
+}
+
+/* ══════════════════════════════════════════
+   FIREBASE
+══════════════════════════════════════════ */
+async function initFirebase() {
+  const syncBar = document.getElementById('sync-bar');
+  try {
+    const {initializeApp} = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
+    const {getDatabase, ref, set, onValue} = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js');
+    const app = initializeApp(FB_CONFIG);
+    fbDb = getDatabase(app);
+    const dateKey = TODAY.replace(/ /g, '-');
+    fbRef = ref(fbDb, `tracker/${dateKey}`);
+    onValue(fbRef, (snap) => {
+      const d = snap.val();
+      if (d) {
+        qty       = d.qty       || {};
+        acts      = d.acts      || {};
+        custom    = d.custom    || [];
+        customActs= d.customActs|| [];
+        tasks     = d.tasks     || [];
+        if (d.weightLbs) { weightLbs = d.weightLbs; }
+        (d.deleted    || []).forEach(id => deletedIds.add(id));
+        (d.deletedActs|| []).forEach(id => deletedActIds.add(id));
+        renderMeals(); renderActs(); renderTasks(); renderWeight();
+      }
+      syncBar.textContent = '✦ synced';
+      syncBar.className   = 'sync-bar ok';
+    });
+  } catch(e) {
+    syncBar.textContent = 'Offline — changes saved locally only';
+    syncBar.className   = 'sync-bar err';
+    loadLocal();
+  }
+}
+
+function saveData() {
+  const data = {qty, acts, custom, customActs, tasks, weightLbs,
+    deleted:[...deletedIds], deletedActs:[...deletedActIds], date:TODAY};
+  if (fbRef) {
+    import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js').then(({set}) => {
+      set(fbRef, data).catch(() => {});
+    });
+  }
+  localStorage.setItem('mt1', JSON.stringify(data));
+}
+
+function loadLocal() {
+  try {
+    const s = JSON.parse(localStorage.getItem('mt1') || '{}');
+    if (s.date === TODAY) {
+      qty       = s.qty       || {};
+      acts      = s.acts      || {};
+      custom    = s.custom    || [];
+      customActs= s.customActs|| [];
+      tasks     = s.tasks     || [];
+      if (s.weightLbs) { weightLbs = s.weightLbs; }
+      (s.deleted    || []).forEach(id => deletedIds.add(id));
+      (s.deletedActs|| []).forEach(id => deletedActIds.add(id));
+    }
+  } catch(e) {}
+}
+
+/* ══════════════════════════════════════════
+   RENDER
+══════════════════════════════════════════ */
+function renderDate() {
+  document.getElementById('date-label').textContent =
+    new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
+}
+
+function renderQuote() {
+  const q = QUOTES[new Date().getDate() % QUOTES.length];
+  document.getElementById('quote-text').textContent = '\u201c' + q.text + '\u201d';
+  document.getElementById('quote-attr').textContent = q.attr ? '\u2014 ' + q.attr : '';
+}
+
+function renderWeight() {
+  document.getElementById('weight-val').textContent = weightLbs.toFixed(1);
+  const tdee = calcTDEE(weightLbs);
+  document.getElementById('tdee-note').textContent = 'TDEE: ' + tdee.toLocaleString();
+  // Keep the TDEE activity entry in sync
+  const tdeEntry = ACTS.find(a => a.id === 'tdee');
+  if (tdeEntry) {
+    tdeEntry.cal = tdee;
+    tdeEntry.sub = `5'9" · ${weightLbs.toFixed(1)} lbs · 26yo`;
+  }
+  update();
+}
+
+function renderHades() {
+  // Use day-of-year for more variety across 100 messages
+  const d = new Date();
+  const start = new Date(d.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((d - start) / 86400000);
+  const idx = dayOfYear % HADES_MSGS.length;
+  document.getElementById('hades-msg').textContent = HADES_MSGS[idx];
+}
+
+function renderTasks() {
+  const el = document.getElementById('task-list');
+  if (!tasks.length) {
+    el.innerHTML = '<li style="font-size:10px;color:var(--muted2);font-style:italic;font-family:var(--body);font-weight:300;">No tasks yet</li>';
+    return;
+  }
+  el.innerHTML = tasks.map((t, i) => `<li class="task-item">
+    <input class="task-chk" type="checkbox" ${t.done?'checked':''} onchange="toggleTask(${i})" onclick="event.stopPropagation()"/>
+    <span class="task-txt ${t.done?'done':''}" onclick="toggleTask(${i})">${t.text}</span>
+    <button onclick="deleteTask(${i})" style="background:none;border:none;color:var(--muted2);font-size:12px;cursor:pointer;padding:0 0 0 3px;line-height:1;touch-action:manipulation;">×</button>
+  </li>`).join('');
+}
+
+function renderMeals() {
+  const all = [...FOODS.filter(f => !deletedIds.has(f.id)), ...custom];
+  const body = document.getElementById('body-meals');
+  if (!all.length) {
+    body.innerHTML = '<div style="padding:14px 16px;font-size:13px;color:var(--muted);font-style:italic;font-family:var(--body);font-weight:300;">No foods yet — add them below ✦</div>';
+    update(); return;
+  }
+  body.innerHTML = all.map(f => {
+    const q = qty[f.id] || 0;
+    const isCx = custom.some(c => c.id === f.id);
+    return `<div class="food-row">
+      <div class="qty-wrap">
+        <button class="qty-btn" ontouchstart="" onclick="chQty('${f.id}',-1)">−</button>
+        <span class="qty-n ${q>0?'on':''}">${q}</span>
+        <button class="qty-btn" ontouchstart="" onclick="chQty('${f.id}',1)">+</button>
+      </div>
+      <div class="food-info">
+        <div class="food-name">${f.name}</div>
+        ${f.sub ? `<div class="food-sub">${f.sub}</div>` : ''}
+      </div>
+      <div class="food-meta">
+        <div class="food-cal">${f.cal}</div>
+        <div class="food-pro">${f.protein||0}g</div>
+      </div>
+      <button class="del-btn" onclick="delItem('${f.id}',${isCx})" aria-label="Remove">×</button>
+    </div>`;
+  }).join('');
+  update();
+}
+
+function renderActs() {
+  const allActs = [...ACTS.filter(a => !deletedActIds.has(a.id)), ...customActs];
+  const body = document.getElementById('body-act');
+  if (!allActs.length) {
+    body.innerHTML = '<div style="padding:14px 16px;font-size:13px;color:var(--muted);font-style:italic;font-family:var(--body);font-weight:300;">Add your activities below ✦</div>';
+    update(); return;
+  }
+  body.innerHTML = allActs.map(a => {
+    const chk = a.always || acts[a.id];
+    const isCx = customActs.some(c => c.id === a.id);
+    const delBtn = (!a.always) ? `<button class="act-del" onclick="delAct('${a.id}',${isCx})" aria-label="Remove">×</button>` : '';
+    return `<div class="act-row" onclick="${a.always ? '' : `tAct('${a.id}')`}">
+      <input class="act-chk" type="checkbox" ${chk?'checked':''} ${a.always?'disabled':''} onchange="tAct('${a.id}')" onclick="event.stopPropagation()"/>
+      <div class="act-info">
+        <div class="act-name ${a.always?'dim':''}">${a.name}</div>
+        ${a.sub ? `<div class="food-sub">${a.sub}</div>` : ''}
+      </div>
+      <div class="act-cal">${a.always?'':'+'}${a.cal.toLocaleString()}</div>
+      ${delBtn}
+    </div>`;
+  }).join('');
+  update();
+}
+
+function update() {
+  const all = [...FOODS.filter(f => !deletedIds.has(f.id)), ...custom];
+  let cal = 0, pro = 0;
+  all.forEach(f => { const q = qty[f.id]||0; cal += f.cal*q; pro += (f.protein||0)*q; });
+  let burn = 0;
+  [...ACTS, ...customActs].filter(a => !deletedActIds.has(a.id)).forEach(a => {
+    if (a.always || acts[a.id]) burn += a.cal;
+  });
+  const def = burn - cal;
+  const pct = Math.min(100, Math.max(0, (def/500)*100));
+  document.getElementById('s-in').textContent   = cal.toLocaleString();
+  document.getElementById('s-burn').textContent = burn.toLocaleString();
+  const el = document.getElementById('s-def');
+  el.textContent = def.toLocaleString();
+  el.className   = 'sc-v' + (def < 0 ? ' over' : '');
+  document.getElementById('s-pro').textContent  = Math.round(pro) + 'g';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-num').textContent  = def.toLocaleString() + ' / 500';
+}
+
+/* ══════════════════════════════════════════
+   INTERACTIONS
+══════════════════════════════════════════ */
+window.chWeight = (d) => {
+  weightLbs = Math.max(80, Math.min(400, Math.round((weightLbs + d) * 10) / 10));
+  saveData(); renderWeight(); renderActs();
+};
+
+window.chQty    = (id, d)  => { qty[id] = Math.max(0,(qty[id]||0)+d); saveData(); renderMeals(); };
+window.tAct     = (id)     => { const a=[...ACTS,...customActs].find(x=>x.id===id); if(!a||a.always)return; acts[id]=!acts[id]; saveData(); renderActs(); };
+window.delAct   = (id, cx) => { if(cx){customActs=customActs.filter(a=>a.id!==id);}else{deletedActIds.add(id);} delete acts[id]; saveData(); renderActs(); };
+window.delItem  = (id, cx) => { if(cx){custom=custom.filter(c=>c.id!==id);}else{deletedIds.add(id);} delete qty[id]; saveData(); renderMeals(); };
+window.toggleTask  = (i)   => { tasks[i].done=!tasks[i].done; saveData(); renderTasks(); };
+window.deleteTask  = (i)   => { tasks.splice(i,1); saveData(); renderTasks(); };
+window.taskKey     = (e)   => { if(e.key==='Enter'){e.preventDefault();addTask();} };
+
+window.addTask = () => {
+  const inp = document.getElementById('task-inp');
+  const txt = inp.value.trim();
+  if (!txt) return;
+  tasks.push({text:txt, done:false});
+  inp.value = '';
+  saveData(); renderTasks();
+};
+
+window.addCustomAct = () => {
+  const name = document.getElementById('a-name').value.trim();
+  const cal  = parseInt(document.getElementById('a-cal').value);
+  if (!name || isNaN(cal)) return;
+  const id = 'ca' + Date.now();
+  customActs.push({id, name, cal, sub:'custom'});
+  acts[id] = true;
+  document.getElementById('a-name').value = '';
+  document.getElementById('a-cal').value  = '';
+  saveData(); renderActs();
+};
+
+window.addCustom = () => {
+  const name = document.getElementById('c-name').value.trim();
+  const cal  = parseInt(document.getElementById('c-cal').value);
+  const pro  = parseInt(document.getElementById('c-pro').value) || 0;
+  if (!name || isNaN(cal)) return;
+  const id = 'cx' + Date.now();
+  custom.push({id, name, sub:'', cal, protein:pro});
+  qty[id] = 1;
+  document.getElementById('c-name').value = '';
+  document.getElementById('c-cal').value  = '';
+  document.getElementById('c-pro').value  = '';
+  saveData(); renderMeals();
+};
+
+window.toggleSec = (k) => {
+  if (k === 'hades') {
+    hadesCol.hades = !hadesCol.hades;
+    document.getElementById('body-hades').style.display = hadesCol.hades ? 'none' : '';
+    document.getElementById('chev-hades').style.transform = hadesCol.hades ? 'rotate(-90deg)' : '';
+    return;
+  }
+  col[k] = !col[k];
+  document.getElementById('body-' + k).classList.toggle('hidden', col[k]);
+  document.querySelector(`#sec-${k} .sec-hdr`).classList.toggle('col', col[k]);
+};
+
+window.resetAll = () => {
+  if (!confirm("Reset today's card?")) return;
+  qty={}; acts={}; custom=[]; customActs=[]; tasks=[];
+  deletedIds.clear(); deletedActIds.clear();
+  saveData(); renderMeals(); renderActs(); renderTasks();
+};
+
+/* ══════════════════════════════════════════
+   DRAWER / CLAUDE
+══════════════════════════════════════════ */
+window.toggleDrawer = () => {
+  drawerOpen = !drawerOpen;
+  document.getElementById('drawer').classList.toggle('open', drawerOpen);
+  if (drawerOpen) setTimeout(() => document.getElementById('drawer-input').focus(), 350);
+};
+window.drawerKey  = (e) => { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();askClaude();} };
+window.autoGrow   = (el) => { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,90)+'px'; };
+
+function buildSystemPrompt() {
+  const all = [...FOODS.filter(f=>!deletedIds.has(f.id)), ...custom];
+  const eaten = all.filter(f=>(qty[f.id]||0)>0)
+    .map(f=>`${qty[f.id]}x ${f.name} (${f.cal*qty[f.id]} cal, ${(f.protein||0)*qty[f.id]}g protein)`).join('; ') || 'nothing yet';
+  const active = [...ACTS,...customActs].filter(a=>a.always||acts[a.id]).map(a=>`${a.name} (${a.cal} cal)`).join('; ');
+  const openTasks = tasks.filter(t=>!t.done).map(t=>t.text).join(', ') || 'none';
+  const calIn = parseInt(document.getElementById('s-in').textContent.replace(/,/g,''))||0;
+  const burn  = parseInt(document.getElementById('s-burn').textContent.replace(/,/g,''))||0;
+  const def   = burn - calIn;
+  const pro   = document.getElementById('s-pro').textContent;
+
+  return `You are an embedded assistant inside Madison's personal daily tracker app. You have full context of her day.
+
+MADISON'S STATS: Female, 5'9", ${weightLbs.toFixed(1)} lbs, 26 years old, medical doctor. Daily deficit target: 500 calories. Protein goal: ~120g/day. Calculated TDEE: ${calcTDEE(weightLbs).toLocaleString()} cal (Mifflin-St Jeor × 1.2 sedentary).
+
+TODAY'S LOG (${TODAY}):
+- Eaten: ${eaten}
+- Activity: ${active}
+- Calories in: ${calIn} | Burned: ${burn} | Deficit: ${def} | Protein: ${pro}
+- Open tasks: ${openTasks}
+
+LOGGED FOODS:
+${all.length ? all.map(f=>`- ${f.name}: ${f.cal} cal, ${f.protein||0}g protein`).join('\n') : '(none yet)'}
+
+You can look up nutrition info for any food using web search. Be direct and concise. When she asks to add a food or change something, confirm what you did clearly. She is a doctor so she appreciates clinical precision and accurate information.`;
+}
+
+window.askClaude = async () => {
+  if (sending) return;
+  const input = document.getElementById('drawer-input');
+  const msg   = input.value.trim();
+  if (!msg) return;
+  sending = true;
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('drawer-send').disabled = true;
+  document.getElementById('drawer-status').textContent = 'Thinking…';
+  appendMsg('user', msg);
+  const thinkId = 'think-' + Date.now();
+  appendMsg('thinking', 'Claude is thinking…', thinkId);
+  chatHistory.push({role:'user', content:msg});
+
+  try {
+    const res  = await fetch('/.netlify/functions/claude', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({system:buildSystemPrompt(), messages:chatHistory})
+    });
+    const data = await res.json();
+    const thinkEl = document.getElementById(thinkId);
+    if (thinkEl) thinkEl.remove();
+    if (data.error) {
+      appendMsg('assistant', 'Error: ' + data.error.message);
+      document.getElementById('drawer-status').textContent = 'Error — try again';
+    } else {
+      const reply = data.content.filter(b=>b.type==='text').map(b=>b.text).join('\n').trim();
+      if (reply) {
+        appendMsg('assistant', reply);
+        chatHistory.push({role:'assistant', content:data.content});
+      }
+      document.getElementById('drawer-status').textContent = 'Ready — log updated as context';
+    }
+  } catch(e) {
+    const thinkEl = document.getElementById(thinkId);
+    if (thinkEl) thinkEl.remove();
+    appendMsg('assistant', 'Network error — check your connection and try again.');
+    document.getElementById('drawer-status').textContent = 'Connection error';
+  }
+  sending = false;
+  document.getElementById('drawer-send').disabled = false;
+};
+
+function appendMsg(role, text, id) {
+  const msgs = document.getElementById('drawer-msgs');
+  const div  = document.createElement('div');
+  div.className = 'msg ' + role;
+  if (id) div.id = id;
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+renderDate();
+renderQuote();
+renderHades();
+renderWeight();
+renderMeals();
+renderActs();
+renderTasks();
+setInterval(renderDate, 60000);
+initFirebase();
+</script>
+</body>
+</html>
