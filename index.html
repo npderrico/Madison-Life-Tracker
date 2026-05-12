@@ -322,6 +322,34 @@ header{background:linear-gradient(135deg,var(--lavender) 0%,#4a2d6e 40%,#6b3d5e 
 .scanner-close-btn{background:none;border:none;color:var(--petal2);font-size:22px;cursor:pointer;line-height:1;touch-action:manipulation;}
 #scanner-preview{flex:1;min-height:0;}
 .scanner-hint{background:rgba(0,0,0,.7);color:rgba(255,255,255,.7);text-align:center;padding:14px;font-family:var(--body);font-size:12px;font-style:italic;font-weight:300;flex-shrink:0;}
+
+/* ── DRAWER MINIMIZE ── */
+.drawer{transition:transform .32s cubic-bezier(.32,.72,0,1),height .28s ease;}
+.drawer.minimized{height:210px;bottom:62px;}
+.drawer.minimized .drawer-status{display:none;}
+.drawer.minimized .drawer-hdr{padding:8px 12px;}
+.drawer.minimized .drawer-msgs{padding:8px 12px;gap:6px;}
+.drawer.minimized .drawer-title{font-size:13px;}
+.drawer-minimize{background:none;border:none;color:var(--muted2);font-size:16px;cursor:pointer;line-height:1;padding:0 4px;touch-action:manipulation;transition:transform .15s;}
+.drawer-minimize:hover{color:var(--lavender);}
+body.drawer-min{padding-bottom:280px;}
+/* ── DRAWER BTN ROW ── */
+.drawer-hdr-btns{display:flex;align-items:center;gap:4px;}
+/* ── MARKDOWN IN MESSAGES ── */
+.msg.assistant p{margin-bottom:7px;line-height:1.55;}
+.msg.assistant p:last-child{margin-bottom:0;}
+.msg.assistant ul{margin:5px 0 5px 0;padding:0;}
+.msg.assistant li{margin:2px 0;padding-left:14px;position:relative;list-style:none;line-height:1.45;}
+.msg.assistant li::before{content:'\u2022';position:absolute;left:3px;color:var(--lavender3);}
+.msg.assistant ol{counter-reset:ol;margin:5px 0;padding:0;}
+.msg.assistant ol li{counter-increment:ol;}
+.msg.assistant ol li::before{content:counter(ol)'.';font-weight:400;color:var(--lavender3);}
+.msg.assistant strong{font-weight:500;color:var(--text);}
+.msg.assistant em{font-style:italic;}
+.msg.assistant h3,.msg.assistant h4{font-family:var(--serif);font-size:14px;color:var(--lavender);font-style:italic;margin:8px 0 3px;font-weight:400;}
+.msg.assistant code{background:var(--blush3);padding:0 3px;font-size:12px;font-family:monospace;}
+.msg.assistant pre{background:var(--blush3);padding:8px;font-size:11px;overflow-x:auto;margin:6px 0;white-space:pre-wrap;font-family:monospace;}
+.msg.assistant hr{border:none;border-top:1px solid var(--border);margin:8px 0;}
 </style>
 </head>
 <body>
@@ -535,7 +563,10 @@ header{background:linear-gradient(135deg,var(--lavender) 0%,#4a2d6e 40%,#6b3d5e 
 <div class="drawer" id="drawer">
   <div class="drawer-hdr">
     <div><div class="drawer-title">Ask Claude</div><div class="drawer-status" id="drawer-status">Ready</div></div>
-    <button class="drawer-close" onclick="toggleDrawer()">&#x2715;</button>
+    <div class="drawer-hdr-btns">
+      <button class="drawer-minimize" id="drawer-minimize" onclick="toggleMinimize()" aria-label="Minimize" title="Minimize">&#x25BD;</button>
+      <button class="drawer-close" onclick="toggleDrawer()">&#x2715;</button>
+    </div>
   </div>
   <div class="drawer-msgs" id="drawer-msgs">
     <div class="msg assistant">Hello Madison! I have your log loaded &#x2014; ask me anything or tell me what to add.</div>
@@ -800,7 +831,7 @@ let scannerInstance = null;
 const deletedIds    = new Set();
 const deletedActIds = new Set();
 let chatHistory=[], fbDb=null, fbRef=null, fbMealRef=null, fbFoodRef=null;
-let drawerOpen=false, sending=false;
+let drawerOpen=false, drawerMinimized=false, sending=false;
 const TODAY = new Date().toDateString();
 const hadesCol = {hades:false};
 
@@ -1422,7 +1453,35 @@ function autoAddMeals() {
 }
 
 /* ══ CLAUDE ══ */
-window.toggleDrawer = () => { drawerOpen=!drawerOpen; document.getElementById('drawer').classList.toggle('open',drawerOpen); if(drawerOpen) setTimeout(()=>document.getElementById('drawer-input').focus(),350); };
+window.toggleDrawer = () => {
+  if (drawerMinimized) {
+    // Expand from minimized to full, don't close
+    drawerMinimized = false;
+    const d = document.getElementById('drawer');
+    d.classList.remove('minimized');
+    document.body.classList.remove('drawer-min');
+    const btn = document.getElementById('drawer-minimize');
+    if (btn) btn.innerHTML = '&#x25BD;';
+    d.querySelector('.drawer-msgs').scrollTop = 999999;
+    return;
+  }
+  drawerOpen = !drawerOpen;
+  const d = document.getElementById('drawer');
+  d.classList.toggle('open', drawerOpen);
+  if (drawerOpen) setTimeout(()=>document.getElementById('drawer-input').focus(), 350);
+  if (!drawerOpen) { drawerMinimized=false; d.classList.remove('minimized'); document.body.classList.remove('drawer-min'); }
+};
+window.toggleMinimize = () => {
+  drawerMinimized = !drawerMinimized;
+  const d = document.getElementById('drawer');
+  d.classList.toggle('minimized', drawerMinimized);
+  document.body.classList.toggle('drawer-min', drawerMinimized);
+  const btn = document.getElementById('drawer-minimize');
+  if (btn) btn.innerHTML = drawerMinimized ? '&#x25B3;' : '&#x25BD;';
+  if (!drawerMinimized) {
+    setTimeout(() => { d.querySelector('.drawer-msgs').scrollTop = 999999; }, 300);
+  }
+};
 window.drawerKey  = (e) => { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();askClaude();} };
 window.autoGrow   = (el) => { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,90)+'px'; };
 
@@ -1444,23 +1503,107 @@ window.askClaude = async () => {
   document.getElementById('drawer-status').textContent='Thinking\u2026';
   appendMsg('user',msg);
   const tid='think-'+Date.now(); appendMsg('thinking','Claude is thinking\u2026',tid);
-  chatHistory.push({role:'user',content:msg});
+  chatHistory.push({role:'user',content:msg}); saveChatHistory();
   try {
     const res=await fetch('/.netlify/functions/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:buildSystemPrompt(),messages:chatHistory})});
     const data=await res.json();
     const te=document.getElementById(tid); if(te) te.remove();
     if(data.error){appendMsg('assistant','Error: '+data.error.message);document.getElementById('drawer-status').textContent='Error';}
-    else{const reply=data.content.filter(b=>b.type==='text').map(b=>b.text).join('\n').trim();if(reply){appendMsg('assistant',reply);chatHistory.push({role:'assistant',content:data.content});}document.getElementById('drawer-status').textContent='Ready';}
+    else{const reply=data.content.filter(b=>b.type==='text').map(b=>b.text).join('\n').trim();if(reply){appendMsg('assistant',reply);chatHistory.push({role:'assistant',content:data.content}); saveChatHistory();}document.getElementById('drawer-status').textContent='Ready';}
   } catch(e) {
     const te=document.getElementById(tid); if(te) te.remove();
     appendMsg('assistant','Network error \u2014 check connection.');document.getElementById('drawer-status').textContent='Error';
   }
   sending=false; document.getElementById('drawer-send').disabled=false;
 };
+function renderMarkdown(text) {
+  let h = text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  // fenced code blocks
+  h = h.replace(/```([\s\S]*?)```/g, (_,c) =>
+    '<pre>'+c.trim()+'</pre>');
+  // inline code
+  h = h.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+  // bold
+  h = h.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+  // italic
+  h = h.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+  // headings
+  h = h.replace(/^#{1,3}[ \t]+(.+)$/gm, '<h3>$1</h3>');
+  // hr
+  h = h.replace(/^---+$/gm, '<hr>');
+  // unordered list items — collect consecutive ones into <ul>
+  h = h.replace(/^[ \t]*[-*\u2022][ \t]+(.+)$/gm, '<li>$1</li>');
+  h = h.replace(/(<li>.*?<\/li>)(\n<li>.*?<\/li>)*/gs,
+    m => '<ul>'+m.replace(/\n/g,'')+'</ul>');
+  // ordered list items
+  h = h.replace(/^[ \t]*(\d+)[.)][ \t]+(.+)$/gm, '<li>$2</li>');
+  // paragraph: double newline
+  h = h.replace(/\n\n/g, '</p><p>');
+  h = h.replace(/\n/g, '<br>');
+  h = '<p>' + h + '</p>';
+  // clean up empty paragraphs around block elements
+  h = h.replace(/<p>(<(?:ul|ol|pre|hr|h3)[^>]*>)/g, '$1');
+  h = h.replace(/(<\/(?:ul|ol|pre|h3)>)<\/p>/g, '$1');
+  return h;
+}
+
 function appendMsg(role,text,id) {
   const msgs=document.getElementById('drawer-msgs'), div=document.createElement('div');
-  div.className='msg '+role; if(id) div.id=id; div.textContent=text;
+  div.className='msg '+role; if(id) div.id=id;
+  if (role==='assistant') {
+    div.innerHTML = renderMarkdown(text);
+  } else {
+    div.textContent = text;
+  }
   msgs.appendChild(div); msgs.scrollTop=msgs.scrollHeight;
+}
+
+
+/* ══ CHAT HISTORY PERSISTENCE ══ */
+function saveChatHistory() {
+  const key = 'mt_chat_' + TODAY.replace(/ /g,'-');
+  try { localStorage.setItem(key, JSON.stringify(chatHistory)); } catch(e) {}
+}
+
+function loadChatHistory() {
+  const key = 'mt_chat_' + TODAY.replace(/ /g,'-');
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || '[]');
+    if (!saved.length) return;
+    chatHistory = saved;
+    const msgs = document.getElementById('drawer-msgs');
+    msgs.innerHTML = '';
+    saved.forEach(m => {
+      if (m.role === 'user') {
+        const txt = typeof m.content === 'string' ? m.content
+          : (Array.isArray(m.content) ? m.content.filter(b=>b.type==='text').map(b=>b.text).join('') : '');
+        if (txt) appendMsg('user', txt);
+      } else if (m.role === 'assistant') {
+        const txt = Array.isArray(m.content)
+          ? m.content.filter(b=>b.type==='text').map(b=>b.text).join('\n').trim()
+          : (typeof m.content === 'string' ? m.content : '');
+        if (txt) appendMsg('assistant', txt);
+      }
+    });
+    if (!msgs.children.length) {
+      appendMsg('assistant', 'Hello Madison! I have your log loaded \u2014 ask me anything or tell me what to add.');
+    }
+  } catch(e) {}
+}
+
+function scheduleChatReset() {
+  const now = new Date();
+  const reset = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0, 1, 0, 0);
+  const ms = reset - now;
+  setTimeout(() => {
+    chatHistory = [];
+    const key = 'mt_chat_' + TODAY.replace(/ /g,'-');
+    localStorage.removeItem(key);
+    const msgs = document.getElementById('drawer-msgs');
+    msgs.innerHTML = '';
+    appendMsg('assistant', 'Good morning \u2014 new day, fresh log. I\u2019m ready when you are!');
+  }, ms);
 }
 
 /* ══ INIT ══ */
@@ -1470,6 +1613,8 @@ renderWeight(); renderMeals(); renderActs(); renderTasks();
 renderFoodLibrary(); renderMealLibrary(); renderGoals();
 document.getElementById('prog-target-inp').value=calorieTarget;
 const gi=document.getElementById('goals-target-inp'); if(gi) gi.value=calorieTarget;
+loadChatHistory();
+scheduleChatReset();
 checkWeighIn();
 setInterval(renderDate,60000);
 initFirebase();
