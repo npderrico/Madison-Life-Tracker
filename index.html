@@ -1679,7 +1679,7 @@ function wkDateStr(progDay) {
 function getCurrentProgDay() {
   const now = new Date();
   const diff = Math.floor((now - PROGRAM_START) / 86400000);
-  return Math.max(0, diff);
+  return diff < 0 ? -1 : diff;
 }
 
 function getProgDayData(progDay) {
@@ -1719,7 +1719,7 @@ function getProgDayData(progDay) {
 
 window.wkNavigate = (dir) => {
   const total = 14 * 7;
-  wkViewProgDay = Math.max(0, Math.min(total - 1, (wkViewProgDay||0) + dir));
+  wkViewProgDay = Math.max(-1, Math.min(total - 1, (wkViewProgDay||0) + dir));
   renderWorkouts();
   loadWkLogForDate(wkDateStr(wkViewProgDay));
 };
@@ -1739,10 +1739,7 @@ function renderWorkouts() {
   const wrap = document.getElementById("wk-wrap");
   if (!wrap) return;
 
-  const now = new Date();
-  const isBeforeStart = now < PROGRAM_START;
-
-  if (isBeforeStart && wkViewProgDay === 0) {
+  if (wkViewProgDay < 0) {
     const startFormatted = PROGRAM_START.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
     wrap.innerHTML =
       "<div class=\"wk-nav-hdr\">" +
