@@ -181,6 +181,11 @@ header{background:linear-gradient(135deg,var(--lavender) 0%,#4a2d6e 40%,#6b3d5e 
 .weight-unit-lbl{font-size:10px;color:var(--muted2);font-family:var(--body);font-style:italic;font-weight:300;}
 /* TAB PANES */
 .tab-pane{display:none;}.tab-pane.active{display:block;}
+body.wk-tab-active .card{display:none!important;}
+body.wk-tab-active #sync-bar{display:none!important;}
+.wk-sync-status{font-size:9px;letter-spacing:.12em;font-family:var(--body);font-weight:300;text-align:center;padding:4px 0 2px;color:var(--muted2);font-style:italic;}
+.wk-sync-status.ok{color:var(--lavender2);}
+.wk-sync-status.err{color:#c0717a;}
 /* ══ WORKOUT TAB ══ */
 .wk-wrap{padding:0 0 20px;}
 .wk-nav-hdr{position:sticky;top:0;z-index:9;background:var(--cream);border-bottom:1px solid var(--border2);
@@ -633,7 +638,7 @@ body.drawer-min{padding-bottom:280px;}
 </div>
 
 <div id="tab-workouts" class="tab-pane">
-  <div class="wk-wrap" id="wk-wrap"></div>
+  <div class="wk-sync-status" id="wk-sync-status"></div><div class="wk-wrap" id="wk-wrap"></div>
 </div>
 <!-- BOTTOM TAB BAR -->
 <nav class="tab-bar">
@@ -959,7 +964,7 @@ async function initFirebase() {
     const {initializeApp} = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
     const {getDatabase, ref, set, onValue} = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js');
     const app = initializeApp(FB_CONFIG);
-    fbDb = getDatabase(app); window.fbDb = fbDb;
+    fbDb = getDatabase(app); window.fbDb = fbDb; loadLastWeightsFromFirebase(); flushPendingWrites();
     const dateKey = TODAY.replace(/ /g,'-');
     fbRef = ref(fbDb, 'tracker/' + dateKey);
     onValue(fbRef, (snap) => {
@@ -1286,6 +1291,7 @@ window.switchTab = (tab) => {
     document.getElementById('tab-'+t).classList.toggle('active',t===tab);
     document.getElementById('tabbtn-'+t).classList.toggle('active',t===tab);
   });
+  document.body.classList.toggle('wk-tab-active', tab==='workouts');
 };
 
 window.setCategory = (cat) => {
@@ -1668,6 +1674,8 @@ const PROGRAM_DATA = {"name":"TTM 2-Mile & 5-Mile Running Program","version":"v1
 
 let wkViewProgDay = null;
 let wkLogs = {};
+let wkLastWeights = {};    // { normKey: weight }  — most recent per exercise
+let wkPendingWrites = [];  // offline queue: [{path, data}]
 let restTimerInterval = null;
 let restTimerSecs = 0;
 
@@ -1861,9 +1869,12 @@ function renderSetRow(setKey, setIdx, repsPresc, savedWeight, done, restSec, dat
       thisRep = setIdx === 0 ? parts[0] : parts[1];
     }
   }
+  var lastW = (!savedWeight && wkLastWeights[setKey]) ? wkLastWeights[setKey] : "";
   return "<div class=\"set-row" + (done ? " done-row" : "") + "\" id=\"sr-" + setKey + "\">" +
     "<span class=\"set-num-badge\">" + (setIdx+1) + "</span>" +
-    "<input class=\"set-weight-inp\" type=\"number\" placeholder=\"lbs\" value=\"" + escH(String(savedWeight||"")) + "\" " +
+    "<input class=\"set-weight-inp\" type=\"number\" " +
+    "placeholder=\"" + (lastW ? escH(lastW) + " lbs" : "lbs") + "\" " +
+    "value=\"" + escH(String(savedWeight||"")) + "\" " +
     "oninput=\"wkSaveWeight(this,'" + setKey + "','" + dateStr + "')\" step=\"2.5\">" +
     "<span class=\"set-weight-unit\">lbs</span>" +
     "<span class=\"set-reps-lbl\">" + escH(thisRep) + " reps</span>" +
@@ -2140,27 +2151,116 @@ function updateRestTimerDisplay() {
 }
 
 /* Firebase workout log */
+/* ── WEIGHT TRACKING ── */
+// Normalize set key to a stable per-exercise key (strips date-specific prefix)
+function wkWeightKey(setKey) { return setKey; }
+
+function loadWkLastWeights() {
+  try {
+    var s = localStorage.getItem("mt_workout_lastweights");
+    if (s) wkLastWeights = JSON.parse(s);
+  } catch(e) {}
+}
+
+function persistLastWeights() {
+  try { localStorage.setItem("mt_workout_lastweights", JSON.stringify(wkLastWeights)); } catch(e) {}
+  wkSyncLastWeightsToFirebase();
+}
+
+function wkSyncLastWeightsToFirebase() {
+  if (!window.fbDb) return;
+  import("https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js").then(function(m) {
+    m.set(m.ref(window.fbDb, "workoutLastWeights"), wkLastWeights).catch(function(){});
+  });
+}
+
+function loadLastWeightsFromFirebase() {
+  if (!window.fbDb) return;
+  import("https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js").then(function(m) {
+    m.onValue(m.ref(window.fbDb, "workoutLastWeights"), function(snap) {
+      var d = snap.val();
+      if (d) {
+        // Merge: Firebase wins on conflict (more recent device may have newer data)
+        Object.assign(wkLastWeights, d);
+        try { localStorage.setItem("mt_workout_lastweights", JSON.stringify(wkLastWeights)); } catch(e) {}
+        renderWorkouts();
+      }
+    }, { onlyOnce: true });
+  });
+}
+
+/* ── OFFLINE-FIRST LOG SAVE ── */
+function setWkSyncStatus(state) {
+  var el = document.getElementById("wk-sync-status");
+  if (!el) return;
+  if (state === "ok") { el.textContent = "synced"; el.className = "wk-sync-status ok"; }
+  else if (state === "offline") { el.textContent = "offline — saved locally"; el.className = "wk-sync-status err"; }
+  else { el.textContent = ""; el.className = "wk-sync-status"; }
+}
+
 function saveWkLog(dateStr) {
-  const log = wkLogs[dateStr];
-  try { localStorage.setItem("mt_workout_" + dateStr, JSON.stringify(log)); } catch(e){}
+  var log = wkLogs[dateStr];
+  // 1. Always write localStorage first (synchronous, always works offline)
+  try { localStorage.setItem("mt_workout_" + dateStr, JSON.stringify(log)); } catch(e) {}
+  // 2. Extract any non-empty weights into lastWeights cache
+  if (log && log.weights) {
+    var changed = false;
+    Object.keys(log.weights).forEach(function(k) {
+      if (log.weights[k]) { wkLastWeights[k] = log.weights[k]; changed = true; }
+    });
+    if (changed) persistLastWeights();
+  }
+  // 3. Try Firebase; if offline, queue for retry
   if (window.fbDb) {
     import("https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js").then(function(m) {
-      m.set(m.ref(window.fbDb, "workoutLogs/" + dateStr), log).catch(function(){});
+      m.set(m.ref(window.fbDb, "workoutLogs/" + dateStr), log).then(function() {
+        setWkSyncStatus("ok");
+        flushPendingWrites();
+      }).catch(function() {
+        wkPendingWrites.push({ path: "workoutLogs/" + dateStr, data: log });
+        setWkSyncStatus("offline");
+      });
     });
+  } else {
+    wkPendingWrites.push({ path: "workoutLogs/" + dateStr, data: log });
+    setWkSyncStatus("offline");
   }
 }
 
+function flushPendingWrites() {
+  if (!window.fbDb || wkPendingWrites.length === 0) return;
+  import("https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js").then(function(m) {
+    var pending = wkPendingWrites.slice();
+    wkPendingWrites = [];
+    pending.forEach(function(item) {
+      m.set(m.ref(window.fbDb, item.path), item.data).catch(function() {
+        wkPendingWrites.push(item); // re-queue if still failing
+      });
+    });
+    if (wkPendingWrites.length === 0) setWkSyncStatus("ok");
+  });
+}
+
 function loadWkLogForDate(dateStr) {
+  // Load from localStorage immediately (no wait)
   try {
-    const saved = localStorage.getItem("mt_workout_" + dateStr);
-    if (saved) wkLogs[dateStr] = JSON.parse(saved);
-  } catch(e){}
+    var saved = localStorage.getItem("mt_workout_" + dateStr);
+    if (saved) { wkLogs[dateStr] = JSON.parse(saved); renderWorkouts(); }
+  } catch(e) {}
+  // Then reconcile with Firebase (Firebase wins if newer)
   if (window.fbDb) {
     import("https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js").then(function(m) {
       m.onValue(m.ref(window.fbDb, "workoutLogs/" + dateStr), function(snap) {
-        const d = snap.val();
-        if (d) { wkLogs[dateStr] = d; renderWorkouts(); }
-      }, { onlyOnce:true });
+        var d = snap.val();
+        if (d) {
+          wkLogs[dateStr] = d;
+          try { localStorage.setItem("mt_workout_" + dateStr, JSON.stringify(d)); } catch(e) {}
+          renderWorkouts();
+        } else if (wkLogs[dateStr]) {
+          // We have local data but Firebase doesn't — push it up
+          m.set(m.ref(window.fbDb, "workoutLogs/" + dateStr), wkLogs[dateStr]).catch(function(){});
+        }
+      }, { onlyOnce: true });
     });
   }
 }
@@ -2224,6 +2324,7 @@ scheduleChatReset();
 checkWeighIn();
 setInterval(renderDate,60000);
 renderWorkouts();
+loadWkLastWeights();
 loadWkLogForDate(wkDateStr(getCurrentProgDay()));
 initFirebase();
 </script>
