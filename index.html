@@ -181,6 +181,99 @@ header{background:linear-gradient(135deg,var(--lavender) 0%,#4a2d6e 40%,#6b3d5e 
 .weight-unit-lbl{font-size:10px;color:var(--muted2);font-family:var(--body);font-style:italic;font-weight:300;}
 /* TAB PANES */
 .tab-pane{display:none;}.tab-pane.active{display:block;}
+/* ══ WORKOUT TAB ══ */
+.wk-wrap{padding:0 0 20px;}
+.wk-nav-hdr{position:sticky;top:0;z-index:9;background:var(--cream);border-bottom:1px solid var(--border2);
+  padding:10px 12px 8px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(91,63,126,.1);}
+.wk-nav-btn{background:none;border:1px solid var(--border2);color:var(--lavender);width:34px;height:34px;
+  border-radius:50%;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  flex-shrink:0;touch-action:manipulation;line-height:1;}
+.wk-nav-btn:active{background:var(--blush2);}
+.wk-nav-info{flex:1;text-align:center;min-width:0;}
+.wk-phase-lbl{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-family:var(--body);font-weight:300;}
+.wk-day-lbl{font-family:var(--serif);font-size:15px;color:var(--lavender);font-style:italic;font-weight:500;line-height:1.2;margin-top:1px;}
+.wk-focus-lbl{font-size:10px;color:var(--muted);font-family:var(--body);margin-top:2px;font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.wk-today-btn{background:none;border:1px solid var(--lavender3);color:var(--lavender2);font-size:10px;
+  padding:4px 8px;font-family:var(--body);cursor:pointer;letter-spacing:.08em;flex-shrink:0;touch-action:manipulation;}
+.wk-section{margin:12px 12px 0;}
+.wk-sec-hdr{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted2);font-family:var(--body);
+  font-weight:300;padding:0 0 6px;border-bottom:1px solid var(--border);margin-bottom:8px;}
+.wk-session-notes{background:var(--blush2);border:1px solid var(--border);padding:8px 10px;margin-bottom:8px;border-radius:2px;}
+.wk-session-notes-hdr{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  font-family:var(--body);font-weight:300;cursor:pointer;display:flex;align-items:center;justify-content:space-between;}
+.wk-session-notes-body{margin-top:6px;display:none;}
+.wk-session-notes-body.open{display:block;}
+.wk-session-note{font-size:11px;color:var(--muted);font-family:var(--body);font-weight:300;line-height:1.5;
+  padding-left:10px;position:relative;margin-bottom:2px;}
+.wk-session-note::before{content:'·';position:absolute;left:2px;}
+.ex-card{background:var(--cream);border:1px solid var(--border2);margin-bottom:8px;overflow:hidden;}
+.ex-card-hdr{padding:8px 10px 6px;border-bottom:1px solid var(--border);}
+.ex-name-row{display:flex;align-items:baseline;gap:6px;}
+.ex-ss-badge{background:var(--lavender);color:#fff;font-size:8px;letter-spacing:.08em;padding:1px 5px;
+  font-family:var(--body);font-weight:500;flex-shrink:0;}
+.ex-name{font-family:var(--body);font-size:13px;color:var(--text);font-weight:400;flex:1;}
+.ex-prescription{font-family:var(--serif);font-size:12px;color:var(--muted);font-style:italic;flex-shrink:0;}
+.ex-meta{font-size:10px;color:var(--muted2);font-family:var(--body);font-weight:300;margin-top:2px;}
+.ex-note{font-size:10px;color:var(--muted);font-family:var(--body);font-style:italic;margin-top:2px;}
+.ex-warmup-card{background:var(--blush2);border:1px solid var(--border);margin-bottom:8px;
+  padding:8px 10px;display:flex;align-items:center;justify-content:space-between;}
+.ex-warmup-name{font-family:var(--body);font-size:13px;color:var(--text);}
+.ex-warmup-presc{font-family:var(--serif);font-size:12px;color:var(--muted);font-style:italic;}
+.ex-warmup-note{font-size:10px;color:var(--muted2);margin-top:2px;}
+.set-row{display:flex;align-items:center;gap:6px;padding:6px 10px;border-bottom:1px solid var(--border);}
+.set-row:last-child{border-bottom:none;}
+.set-row.done-row{background:rgba(91,63,126,.04);}
+.set-num-badge{width:20px;height:20px;background:var(--blush3);border-radius:50%;display:flex;
+  align-items:center;justify-content:center;font-size:9px;color:var(--muted);font-family:var(--body);
+  font-weight:500;flex-shrink:0;}
+.set-weight-inp{width:58px;background:var(--blush);border:1px solid var(--border2);color:var(--text);
+  font-family:var(--serif);font-size:13px;padding:4px 6px;text-align:center;outline:none;font-style:italic;
+  -moz-appearance:textfield;}
+.set-weight-inp::-webkit-outer-spin-button,.set-weight-inp::-webkit-inner-spin-button{-webkit-appearance:none;}
+.set-weight-inp:focus{border-color:var(--lavender2);}
+.set-weight-unit{font-size:9px;color:var(--muted2);font-family:var(--body);}
+.set-reps-lbl{flex:1;font-size:11px;color:var(--muted);font-family:var(--body);font-weight:300;text-align:center;}
+.set-check-btn{width:32px;height:32px;border-radius:50%;border:2px solid var(--border2);background:none;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;
+  transition:all .15s;touch-action:manipulation;color:var(--muted2);font-size:14px;}
+.set-check-btn.done{background:var(--lavender);border-color:var(--lavender);color:#fff;}
+.set-check-btn:active{transform:scale(.92);}
+/* CONDITIONING */
+.cond-card{background:var(--cream);border:1px solid var(--border2);overflow:hidden;}
+.cond-type-strip{background:linear-gradient(135deg,var(--lavender),var(--lavender2));
+  padding:7px 12px;display:flex;align-items:center;justify-content:space-between;}
+.cond-type-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#fff;font-family:var(--body);font-weight:500;}
+.cond-done-btn{background:none;border:1px solid rgba(255,255,255,.4);color:#fff;font-size:9px;
+  letter-spacing:.1em;padding:3px 8px;cursor:pointer;font-family:var(--body);touch-action:manipulation;}
+.cond-done-btn.done{background:rgba(255,255,255,.2);}
+.cond-row{display:flex;align-items:flex-start;gap:8px;padding:6px 12px;border-bottom:1px solid var(--border);}
+.cond-row:last-child{border-bottom:none;}
+.cond-key{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);
+  font-family:var(--body);font-weight:300;flex-shrink:0;width:72px;padding-top:1px;}
+.cond-val{font-size:12px;color:var(--text);font-family:var(--body);font-weight:300;line-height:1.5;flex:1;}
+.cond-val strong{font-weight:500;color:var(--lavender);}
+.cond-subcard{background:var(--blush2);border:1px solid var(--border);margin:0 12px 6px;padding:8px 10px;}
+.cond-subcard-lbl{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  font-family:var(--body);margin-bottom:4px;}
+.cond-rest-note{font-size:10px;color:var(--rose);font-family:var(--body);font-style:italic;margin-top:2px;}
+.wk-rest-day{text-align:center;padding:48px 16px;color:var(--muted2);font-family:var(--serif);
+  font-size:18px;font-style:italic;}
+.wk-pre-start{text-align:center;padding:40px 16px;}
+.wk-pre-start-title{font-family:var(--serif);font-size:20px;color:var(--lavender);font-style:italic;margin-bottom:8px;}
+.wk-pre-start-sub{font-size:12px;color:var(--muted);font-family:var(--body);font-weight:300;line-height:1.6;}
+/* REST TIMER */
+.rest-timer-bar{position:fixed;bottom:62px;left:0;right:0;background:var(--lavender);
+  padding:10px 16px;display:flex;align-items:center;gap:12px;z-index:30;
+  transform:translateY(100%);transition:transform .3s;box-shadow:0 -2px 12px rgba(91,63,126,.3);}
+.rest-timer-bar.visible{transform:translateY(0);}
+.rest-timer-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--petal2);
+  font-family:var(--body);font-weight:300;flex:1;}
+.rest-timer-count{font-family:var(--serif);font-size:22px;color:#fff;font-style:italic;min-width:52px;text-align:center;}
+.rest-timer-skip{background:none;border:1px solid rgba(255,255,255,.4);color:#fff;font-size:10px;
+  letter-spacing:.1em;padding:4px 10px;cursor:pointer;font-family:var(--body);touch-action:manipulation;}
+.wk-cond-complete{text-align:center;padding:10px;margin-top:6px;}
+.wk-cond-complete-btn{background:var(--lavender);color:#fff;border:none;padding:10px 24px;
+  font-family:var(--body);font-size:12px;letter-spacing:.1em;cursor:pointer;touch-action:manipulation;}
 /* BOTTOM TAB BAR */
 .tab-bar{position:fixed;bottom:0;left:0;right:0;height:62px;background:var(--cream);border-top:2px solid var(--border2);display:flex;z-index:20;box-shadow:0 -2px 16px rgba(91,63,126,.12);}
 .tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;gap:3px;touch-action:manipulation;color:var(--muted2);transition:color .15s;padding-bottom:4px;}
@@ -538,6 +631,9 @@ body.drawer-min{padding-bottom:280px;}
   </div>
 </div>
 
+<div id="tab-workouts" class="tab-pane">
+  <div class="wk-wrap" id="wk-wrap"></div>
+</div>
 <!-- BOTTOM TAB BAR -->
 <nav class="tab-bar">
   <button class="tab-btn active" id="tabbtn-today" onclick="switchTab('today')">
@@ -551,6 +647,10 @@ body.drawer-min{padding-bottom:280px;}
   <button class="tab-btn" id="tabbtn-goals" onclick="switchTab('goals')">
     <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
     <span class="tab-lbl">Goals</span>
+  </button>
+  <button class="tab-btn" id="tabbtn-workouts" onclick="switchTab('workouts')">
+    <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29l-1.43-1.43z"/></svg>
+    <span class="tab-lbl">Workouts</span>
   </button>
 </nav>
 
@@ -830,7 +930,7 @@ let builderIngredients = [];
 let scannerInstance = null;
 const deletedIds    = new Set();
 const deletedActIds = new Set();
-let chatHistory=[], fbDb=null, fbRef=null, fbMealRef=null, fbFoodRef=null;
+let chatHistory=[], fbDb=null, fbRef=null, fbMealRef=null, fbFoodRef=null, fbWkRef=null;
 let drawerOpen=false, drawerMinimized=false, sending=false;
 const TODAY = new Date().toDateString();
 const hadesCol = {hades:false};
@@ -858,7 +958,7 @@ async function initFirebase() {
     const {initializeApp} = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
     const {getDatabase, ref, set, onValue} = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js');
     const app = initializeApp(FB_CONFIG);
-    fbDb = getDatabase(app);
+    fbDb = getDatabase(app); window.fbDb = fbDb;
     const dateKey = TODAY.replace(/ /g,'-');
     fbRef = ref(fbDb, 'tracker/' + dateKey);
     onValue(fbRef, (snap) => {
@@ -1181,7 +1281,7 @@ window.closeMacroModal = () => document.getElementById('macro-modal').classList.
 
 /* ══ INTERACTIONS ══ */
 window.switchTab = (tab) => {
-  ['today','meals','goals'].forEach(t=>{
+  ['today','meals','goals','workouts'].forEach(t=>{
     document.getElementById('tab-'+t).classList.toggle('active',t===tab);
     document.getElementById('tabbtn-'+t).classList.toggle('active',t===tab);
   });
@@ -1560,6 +1660,558 @@ function appendMsg(role,text,id) {
 }
 
 
+
+/* ══ WORKOUTS ══ */
+const PROGRAM_START = new Date('2026-07-20T00:00:00');
+const PROGRAM_DATA = {"name":"TTM 2-Mile & 5-Mile Running Program","version":"v1","totalWeeks":13,"startDate":"2026-07-20","zone2Reference":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"liftingPrinciples":{"rir":"RIR = Reps In Reserve. Stop a set this many reps before failure.","compoundRest":"2-3 min between sets for compound movements","isolationRest":"45-60 sec between sets for isolation movements","plyoRest":"60-90 sec between A and B plyo sets — fatigue destroys power output","rampUpSets":"Before first working set of any compound exercise, perform 1-5 ramp-up sets of 1-5 reps at progressively heavier loads. These do not need to be tracked. Goal: warm up, not fatigue.","supersets":"Indicated by 1a/1b, 2a/2b, etc. (stagger sets). Rest 60-90 sec between each exercise in the pair, then repeat. You may do straight sets if gym layout doesn't allow.","unilateral":"For single-leg movements (split squats, single leg RDL), rest 1-2 min between legs. If leg 2 feels fresh immediately after leg 1, you didn't work leg 1 hard enough."},"liftTemplates":{"phase1_lower":{"label":"Full Body Lift (Lower Focus)","warmup":"Full Body Warmup","sessionNotes":["Compound movements: 1-2 RIR, rest 2-3 min between sets","Isolation movements: 1 RIR, rest 45-60 sec between sets","Implement ramp-up sets before working sets (1-5 sets of 1-5 reps at lighter load)","Plyos: rest 60-90 sec between A and B"],"exercises":[{"name":"Backward Drags","prescription":"3-5 min","type":"warmup","notes":"Light/prep stim — minimal weight"},{"name":"Hamstring Curl","sets":2,"reps":"10-12","type":"isolation","rir":1,"rest":"45-60 sec","notes":"Lying, seated, or standing — any variation"},{"name":"Squat","sets":3,"reps":"4-6","type":"compound","rir":"1-2","rest":"2-3 min","notes":"BB not required — SSB, belt squat, or machine if desired"},{"name":"Neutral Chins","sets":3,"reps":"6-8","type":"compound","rir":"1-2","rest":"2-3 min"},{"name":"RDL","sets":2,"reps":"6-8","type":"compound","rir":"1-2","rest":"2-3 min"},{"name":"Deficit Pushups w/ Pause","sets":2,"reps":"to failure","type":"compound","rir":0,"rest":"2-3 min"},{"name":"Straight Leg Situps","sets":2,"reps":"12-20","type":"isolation","rir":1,"rest":"45-60 sec"}]},"phase1_upper":{"label":"Full Body Lift (Upper Focus)","warmup":"Full Body Warmup","sessionNotes":["Compound movements: 1-2 RIR, rest 2-3 min between sets","Isolation movements: 1 RIR, rest 45-60 sec between sets","Plyos: rest 60-90 sec between A and B","For presses and rows: can use machine in place of DBs if desired","Supersets (stagger sets): rest 60-90 sec between each exercise, then repeat the pair"],"exercises":[{"name":"Bumper Plate Jump Pushup","sets":3,"reps":10,"type":"plyo","group":"plyoA","rest_ab":"60-90 sec between A and B"},{"name":"Lateral Depth Jump into Vert","sets":3,"reps":"2 ea","type":"plyo","group":"plyoB","rest_ab":"60-90 sec between A and B"},{"name":"Face Pull","sets":2,"reps":"15-10","type":"isolation","rir":1,"rest":"60-90 sec","superset":"1a","notes":"Drop reps from 15 to 10 across the 2 sets (descending)"},{"name":"Double KB Cleans","sets":2,"reps":"6-8","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"1b"},{"name":"Incline DB Press","sets":3,"reps":"8-12","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"2a"},{"name":"Chest Supported DB Row","sets":3,"reps":"8-12","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"2b"},{"name":"Rack Chins","sets":2,"reps":"6-10","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"3a"},{"name":"Dips","sets":2,"reps":"8-10","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"3b"},{"name":"Reverse Lunge (deficit)","sets":2,"reps":"10-12 ea","type":"compound","rir":"1-2","rest":"2-3 min","notes":"Rest sufficiently between legs (1-2 min) for unilateral benefit"}]},"phase1_calisthenics":{"label":"Full Body Lift (Calisthenic / Plyo Focused)","warmup":"Full Body Warmup","sessionNotes":["Compound movements: 1-2 RIR, rest 2-3 min between sets","Isolation movements: 1 RIR, rest 45-60 sec between sets","Plyos: rest 60-90 sec between A and B — fatigue is your enemy on power work","Plank is optional","HR Pushups: may sub regular pushups if focusing on PT performance"],"exercises":[{"name":"Pogo Hops","sets":3,"reps":15,"type":"plyo","group":"plyoA","rest_ab":"60-90 sec between A and B"},{"name":"Box Jumps","sets":3,"reps":3,"type":"plyo","group":"plyoB","rest_ab":"60-90 sec between A and B","notes":"Step down off box — do NOT jump backward off box"},{"name":"Tib Raise","sets":3,"reps":"15-20","type":"isolation","rir":1,"rest":"45-60 sec","superset":"1a"},{"name":"Seated Calf Raise","sets":3,"reps":"10-12","type":"isolation","rir":1,"rest":"45-60 sec","superset":"1b"},{"name":"Hex Bar DL","sets":3,"reps":"3-5","type":"compound","rir":"1-2","rest":"2-3 min"},{"name":"Pull Ups (BW)","sets":3,"reps":"2x2RIR, 1x1RIR","type":"compound","rest":"2-3 min"},{"name":"HR Push Ups","sets":2,"reps":"45 sec","type":"compound","rest":"2-3 min","notes":"Can sub regular pushups if needed"},{"name":"Plank","sets":1,"reps":"3:30","type":"isolation","rest":"N/A","notes":"Optional"}]},"phase2_optional_calisthenics":{"label":"Optional Calisthenics / Lower Leg Work","optional":true,"sessionNotes":["Optional — do if time permits, skip if prioritizing repeat performance","All movements: 1-2 RIR, rest 60-90 sec between sets"],"exercises":[{"name":"Pushups","sets":3,"reps":10,"type":"compound","rir":"1-2","rest":"60-90 sec"},{"name":"Pull Ups","sets":3,"reps":"1-2 RIR","type":"compound","rir":"1-2","rest":"60-90 sec"},{"name":"Tib Raises","sets":3,"reps":"15-20","type":"isolation","rir":1,"rest":"45-60 sec"},{"name":"Calf Raises","sets":3,"reps":"15-20","type":"isolation","rir":1,"rest":"45-60 sec"}]},"phase2_full_body":{"label":"Full Body Lift","warmup":"Full Body Warmup","sessionNotes":["Compound movements: 1-2 RIR, rest 2-3 min between sets","Isolation movements: 1 RIR, rest 45-60 sec between sets","Plyos: rest 60-90 sec between A and B","For hamstring curl: do whichever variation you did NOT do in Phase 1","Front squat can be subbed with machine or SSB squat","Bench/SLDL can be done with BB or DBs"],"exercises":[{"name":"Med Ball Squat Toss","sets":3,"reps":3,"type":"power","group":"plyoA","rest_ab":"60-90 sec between A and B"},{"name":"Pogo Hops","sets":3,"reps":"12-15","type":"plyo","group":"plyoB","rest_ab":"60-90 sec between A and B"},{"name":"Backward Drags","prescription":"3-5 min","type":"warmup","notes":"Light/prep stim"},{"name":"Hamstring Curl","sets":2,"reps":"10-12","type":"isolation","rir":1,"rest":"45-60 sec","superset":"1a"},{"name":"Front Squat","sets":3,"reps":"6-10","type":"compound","rir":"1-2","rest":"2-3 min"},{"name":"Supinated Chins","sets":2,"reps":"6-8","type":"compound","rir":"1-2","rest":"2-3 min","superset":"2a"},{"name":"Hex Bar DL","sets":2,"reps":"4-6","type":"compound","rir":"1-2","rest":"2-3 min"},{"name":"Incline Bench Press","sets":2,"reps":"8-10","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"3a"},{"name":"Chest Dips (BW)","sets":2,"reps":"8-12","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"3b"},{"name":"Chest Supported DB/Machine Row","sets":2,"reps":"8-12","type":"compound","rir":"1-2","rest":"60-90 sec"}]},"phase2_upper":{"label":"Full Body Lift (Upper Focus)","warmup":"Full Body Warmup","sessionNotes":["Compound movements: 1-2 RIR, rest 2-3 min between sets","Isolation movements: 1 RIR, rest 45-60 sec between sets","Plyos: rest 60-90 sec between A and B","For presses and rows: can use machine in place of DBs"],"exercises":[{"name":"Jumping Pushup","sets":3,"reps":"5-8","type":"plyo","group":"plyoA","rest_ab":"60-90 sec between A and B"},{"name":"Depth Jump (12-18\")","sets":3,"reps":"2-3","type":"plyo","group":"plyoB","rest_ab":"60-90 sec between A and B"},{"name":"Backward Drags","prescription":"3-5 min","type":"warmup","notes":"Light/prep stim"},{"name":"Band Pull Apart","sets":2,"reps":"15-10","type":"isolation","rir":1,"rest":"60-90 sec","superset":"1a"},{"name":"Ring Pushup","sets":2,"reps":"10-15","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"1b"},{"name":"Flat Bench or DB Press","sets":2,"reps":"8-12","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"2a"},{"name":"DB Bent Row","sets":2,"reps":"8-12","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"2b"},{"name":"Lat Pulldown","sets":2,"reps":"6-10","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"3a"},{"name":"High Incline Delt Press","sets":2,"reps":"8-10","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"3b"},{"name":"Single Leg RDL","sets":2,"reps":"8-10","type":"compound","rir":"1-2","rest":"2-3 min","notes":"Rest 1-2 min between legs for unilateral benefit"},{"name":"Bulgarian Split Squat","sets":2,"reps":"10-12","type":"compound","rir":"1-2","rest":"2-3 min","notes":"Rest 1-2 min between legs for unilateral benefit"}]}},"phases":[{"id":"base","name":"Optional Base Phase","openEnded":true,"completionCriteria":"150 min/week zone-2 AND no joint pain AND feeling well-recovered","zone2Params":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"baseSchedule":{"Mon":{"type":"easy_run","duration":"20 min","zone":2},"Wed":{"type":"easy_run","duration":"20 min","zone":2},"Fri":{"type":"easy_run","duration":"20 min","zone":2},"Sat":{"type":"easy_run","duration":"25-30 min","zone":2}},"progression":"Add 5 min to each run per week (or 10 min to one run) until 150 min/week total. If starting from higher volume, add 15 min/week until at 150.","beginnerNote":"Think 'spend X minutes in zone 2' — some may require walking to stay in zone 2. That is fine.","speedTouching":{"when":"After 4-5 weeks of slow running only (or immediately if already base-built for 1+ month)","frequency":"1x per week following a shorter run","options":[{"type":"hill_work","sets":"5-8","duration":"30-45 sec each","surface":"Moderately steep grade (treadmill 6-8% if needed)","pace":"RPE 7-8","rest":"Walk back to base or 1-2 min","notes":"Not max sprinting — sustainable hard effort"},{"type":"strides","sets":"5-8","distance":"60-80 yd","pace":"Goal 2-mile pace or 7/10 effort","execution":"Gradually build over 20m to goal pace, hold for 40-60m, gradually decelerate over 15-30m. Walk/jog back.","notes":"Not all-out sprints — controlled and relaxed. Should feel energizing, not exhausting."}]}},{"id":"phase1","name":"Phase 1","programWeeks":"1-6","daysPerWeek":6,"repeatPacingGuide":{"rpe":"8 for first half of session, 9 for last few repeats","workRestRatio":"1:1 — if you run a repeat in X seconds, rest X seconds","paceCalculation":{"step1":"Start with your known 2-mile time","step2":"Divide by 2 to get per-mile pace (e.g. 2-mile in 13:00 = 6:30/mi)","step3":"Subtract the prescribed seconds-per-mile to find target pace","step4_400m":"Convert to 400m: multiply mile pace in seconds by 0.25 (e.g. 6:18/mi = 378 sec × 0.25 = 94.5 sec = 1:35)","step4_800m":"Convert to 800m: multiply mile pace in seconds by 0.5","step4_1K":"Convert to 1K: multiply mile pace in seconds by 0.621"},"keyRule":"Repeats are NOT all-out sprints. The pace you run should be REPEATABLE. Avoid going out too hard early."},"weeks":[{"week":1,"days":[{"day":1,"focus":"Full Body Strength + Repeats","lift":"phase1_lower","conditioning":{"type":"repeats","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides at goal pace)","sets":8,"distance":"400m","pace":"8-12 sec/mi FASTER than current 2-mile pace (e.g. if 2-mile pace is 6:30/mi, run 400s at 6:18-6:22/mi = 1:35-1:36 per 400m)","paceCalculation":{"step1":"Start with your known 2-mile time","step2":"Divide by 2 to get per-mile pace (e.g. 2-mile in 13:00 = 6:30/mi)","step3":"Subtract the prescribed seconds-per-mile to find target pace","step4_400m":"Convert to 400m: multiply mile pace in seconds by 0.25 (e.g. 6:18/mi = 378 sec × 0.25 = 94.5 sec = 1:35)","step4_800m":"Convert to 800m: multiply mile pace in seconds by 0.5","step4_1K":"Convert to 1K: multiply mile pace in seconds by 0.621"},"workRestRatio":"1:1 — if you run a repeat in X seconds, rest X seconds","restDuration":"Same as lap time (e.g. if you run 1:35, rest 1:35)","restActivity":"Walk only","rpe":"8 for first half of session, 9 for last few repeats","goal":"Each repeat inside pace range; last lap should be your best lap","keyRule":"Repeats are NOT all-out sprints. The pace you run should be REPEATABLE. Avoid going out too hard early.","cooldown":"5-10 min easy jog","notes":"First repeat session — focus on pacing discipline. Do NOT go all out."}},{"day":2,"focus":"Easy Run","lift":null,"conditioning":{"type":"easy_run","duration":"25 min","zone":2,"rpe":"4-5","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Can substitute non-impact zone 2 (bike, row, ski, elliptical) if legs are sore from previous day"}},{"day":3,"focus":"Full Body Lift (Upper) + Optional Easy Conditioning","lift":"phase1_upper","conditioning":{"type":"optional_easy","options":["15-20 min incline walk 8-10% grade","30-45 min ruck at walk-only pace"],"notes":"Ruck is more impactful than incline walk but intended for those maintaining a weekly rucking routine. DO NOT run — running will interfere with run progress."}},{"day":4,"focus":"Tempo","lift":null,"conditioning":{"type":"tempo","warmup":"12 min easy run (RPE 3-4, zone 2)","duration":"15 min","pace":"Current 5-mile pace +8-15 sec/mi (e.g. if 5-mile pace is 7:00/mi, run tempo at 7:08-7:15/mi)","rpe":"7-8 overall (~7.5 target)","effortCue":"Comfortably hard — do NOT turn into a time trial","selfCheck":"After finishing, ask: Could I have run this same pace for another 15 minutes? If clearly YES = well paced. If questionable = went a bit too hard. If no = went too hard.","cooldown":"12 min easy run (RPE ~3, let HR drop slowly)","notes":"Pace may vary week-to-week due to fatigue, weather, etc. Maintaining RPE is more important than maintaining a specific pace number. Tempo duration increases ~2-3 min per week — running the same pace for longer IS progress."}},{"day":5,"focus":"Full Body Lift (Calisthenics/Plyos)","lift":"phase1_calisthenics","conditioning":null},{"day":6,"focus":"LSD","lift":null,"conditioning":{"type":"long_run","duration":"60 min","zone":2,"rpe":"5-6","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Discipline is key — resist going harder than zone 2. Use at least 2 zone 2 gauges."}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest","notes":"Focus on sleep, food prep, and relaxing. Light activity (10-12K steps) is more beneficial than lounging."}}]},{"week":2,"days":[{"day":1,"focus":"Full Body Strength + Repeats","lift":"phase1_lower","conditioning":{"type":"repeats","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides at goal pace)","sets":10,"distance":"400m","pace":"+/- 2 sec off week 1 average (e.g. if you averaged 1:35 per 400m in week 1, target 1:33-1:37)","paceCalculation":{"step1":"Start with your known 2-mile time","step2":"Divide by 2 to get per-mile pace (e.g. 2-mile in 13:00 = 6:30/mi)","step3":"Subtract the prescribed seconds-per-mile to find target pace","step4_400m":"Convert to 400m: multiply mile pace in seconds by 0.25 (e.g. 6:18/mi = 378 sec × 0.25 = 94.5 sec = 1:35)","step4_800m":"Convert to 800m: multiply mile pace in seconds by 0.5","step4_1K":"Convert to 1K: multiply mile pace in seconds by 0.621"},"workRestRatio":"1:1 — if you run a repeat in X seconds, rest X seconds","restDuration":"Same as lap time (e.g. if you run 1:35, rest 1:35)","restActivity":"Walk only","rpe":"8 for first half of session, 9 for last few repeats","goal":"Each repeat inside pace range; last lap should be your best lap","keyRule":"Repeats are NOT all-out sprints. The pace you run should be REPEATABLE. Avoid going out too hard early.","cooldown":"5-10 min easy jog","notes":"2 more reps than week 1. Base pace off actual week 1 data, not pre-program TT."}},{"day":2,"focus":"Easy Run","lift":null,"conditioning":{"type":"easy_run","duration":"30 min","zone":2,"rpe":"4-5","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Can substitute non-impact zone 2 (bike, row, ski, elliptical) if legs are sore from previous day"}},{"day":3,"focus":"Full Body Lift (Upper) + Optional Easy Conditioning","lift":"phase1_upper","conditioning":{"type":"optional_easy","options":["15-20 min incline walk 8-10% grade","30-45 min ruck at walk-only pace"],"notes":"Ruck is more impactful than incline walk but intended for those maintaining a weekly rucking routine. DO NOT run — running will interfere with run progress."}},{"day":4,"focus":"Tempo","lift":null,"conditioning":{"type":"tempo","warmup":"12 min easy run (RPE 3-4, zone 2)","duration":"18 min","pace":"Current 5-mile pace +8-15 sec/mi (e.g. if 5-mile pace is 7:00/mi, run tempo at 7:08-7:15/mi)","rpe":"7-8 overall (~7.5 target)","effortCue":"Comfortably hard — do NOT turn into a time trial","selfCheck":"After finishing, ask: Could I have run this same pace for another 15 minutes? If clearly YES = well paced. If questionable = went a bit too hard. If no = went too hard.","cooldown":"12 min easy run (RPE ~3, let HR drop slowly)","notes":"Pacing example: if pre-program 5-mile is 35:00 (7:00/mi), aim for 7:08-7:15/mi"}},{"day":5,"focus":"Full Body Lift (Calisthenics/Plyos)","lift":"phase1_calisthenics","conditioning":null},{"day":6,"focus":"LSD","lift":null,"conditioning":{"type":"long_run","duration":"70 min","zone":2,"rpe":"5-6","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Discipline is key — resist going harder than zone 2. Use at least 2 zone 2 gauges."}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest"}}]},{"week":3,"days":[{"day":1,"focus":"Full Body Strength + Hill Repeats","lift":"phase1_lower","conditioning":{"type":"hill_repeats","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides)","sets":10,"duration":"1:00 each","surface":"Treadmill @ 5-6% incline (or outdoor hill equivalent — moderately steep grade)","pace":"~2-mile pace or slightly faster, RPE 8-9 (e.g. if 2-mile pace is 6:30/mi, run hills at approximately that effort)","rest":"1:30","restActivity":"Hop off treadmill / walk or trot back to base of hill","rpe":"8-9","goal":"Repeat or slightly increase pace each round","cooldown":"5-10 min easy jog","notes":"Treadmill recommended for controllable incline/grade. First hill repeat week — learn the effort."}},{"day":2,"focus":"Easy Run","lift":null,"conditioning":{"type":"easy_run","duration":"35 min","zone":2,"rpe":"4-5","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Can substitute non-impact zone 2 (bike, row, ski, elliptical) if legs are sore from previous day"}},{"day":3,"focus":"Full Body Lift (Upper) + Optional Easy Conditioning","lift":"phase1_upper","conditioning":{"type":"optional_easy","options":["15-20 min incline walk 8-10% grade","30-45 min ruck at walk-only pace"],"notes":"Ruck is more impactful than incline walk but intended for those maintaining a weekly rucking routine. DO NOT run — running will interfere with run progress."}},{"day":4,"focus":"Tempo","lift":null,"conditioning":{"type":"tempo","warmup":"12 min easy run (RPE 3-4, zone 2)","duration":"20 min","pace":"Current 5-mile pace +8-15 sec/mi (e.g. if 5-mile pace is 7:00/mi, run tempo at 7:08-7:15/mi)","rpe":"7-8 overall (~7.5 target)","effortCue":"Comfortably hard — do NOT turn into a time trial","selfCheck":"After finishing, ask: Could I have run this same pace for another 15 minutes? If clearly YES = well paced. If questionable = went a bit too hard. If no = went too hard.","cooldown":"12 min easy run (RPE ~3, let HR drop slowly)","notes":"Pace may vary week-to-week due to fatigue, weather, etc. Maintaining RPE is more important than maintaining a specific pace number. Tempo duration increases ~2-3 min per week — running the same pace for longer IS progress."}},{"day":5,"focus":"Full Body Lift (Calisthenics/Plyos)","lift":"phase1_calisthenics","conditioning":null},{"day":6,"focus":"LSD with Pickups","lift":null,"conditioning":{"type":"long_run_with_pickups","totalDuration":"70 min","basePace":"Zone 2 (RPE 5-6)","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"pickupCount":5,"pickupWindow":"Any time after 10:00 in and before 60:00 of run","pickupPace":"Between goal 2-mile pace and goal 5-mile pace (e.g. if goal 2-mile = 6:00/mi, goal 5-mile = 6:30/mi, hold ~6:15/mi)","pickupDuration":"1:30","pickupRpe":"7-8","recovery":"Slow back to zone 2 / easy pace after each pickup; HR does not need to be in zone 2 during pickups","notes":"Pacing example: Goal 2-mile=12:00 (6:00/mi) & goal 5-mile=32:30 (6:30/mi) → hold ~6:15/mi for each pickup"}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest"}}]},{"week":4,"days":[{"day":1,"focus":"Full Body Strength + Repeats","lift":"phase1_lower","conditioning":{"type":"repeats","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides at goal pace)","sets":5,"distance":"800m","pace":"4-8 sec/mi FASTER than current 2-mile pace (e.g. if 2-mile pace is 6:30/mi, run 800s at 6:22-6:26/mi = 3:11-3:13 per 800m)","paceCalculation":{"step1":"Start with your known 2-mile time","step2":"Divide by 2 to get per-mile pace (e.g. 2-mile in 13:00 = 6:30/mi)","step3":"Subtract the prescribed seconds-per-mile to find target pace","step4_400m":"Convert to 400m: multiply mile pace in seconds by 0.25 (e.g. 6:18/mi = 378 sec × 0.25 = 94.5 sec = 1:35)","step4_800m":"Convert to 800m: multiply mile pace in seconds by 0.5","step4_1K":"Convert to 1K: multiply mile pace in seconds by 0.621"},"workRestRatio":"1:1 — if you run a repeat in X seconds, rest X seconds","restDuration":"Same as interval time (e.g. if you run 3:10, rest 3:10)","restActivity":"Walk first 2/3 of rest period, jog last 1/3 into next repeat","rpe":"8 for first half of session, 9 for last few repeats","goal":"Each repeat inside pace range; last repeat should be your best","keyRule":"Repeats are NOT all-out sprints. The pace you run should be REPEATABLE. Avoid going out too hard early.","cooldown":"5-10 min easy jog","notes":"Switching to 800m — pace adjustment: only 4-8 sec/mi faster vs. 8-12 for 400s"}},{"day":2,"focus":"REST","lift":null,"conditioning":{"type":"rest","notes":"After a month of hard repeats, take a full rest day for enhanced recovery. This is intentional."}},{"day":3,"focus":"Full Body Lift (Upper) + Optional Easy Conditioning","lift":"phase1_upper","conditioning":{"type":"optional_easy","options":["15-20 min incline walk 8-10% grade","30-45 min ruck at walk-only pace"],"notes":"Ruck is more impactful than incline walk but intended for those maintaining a weekly rucking routine. DO NOT run — running will interfere with run progress."}},{"day":4,"focus":"Tempo","lift":null,"conditioning":{"type":"tempo","warmup":"12 min easy run (RPE 3-4, zone 2)","duration":"23 min","pace":"Current 5-mile pace +8-15 sec/mi (e.g. if 5-mile pace is 7:00/mi, run tempo at 7:08-7:15/mi)","rpe":"7-8 overall (~7.5 target)","effortCue":"Comfortably hard — do NOT turn into a time trial","selfCheck":"After finishing, ask: Could I have run this same pace for another 15 minutes? If clearly YES = well paced. If questionable = went a bit too hard. If no = went too hard.","cooldown":"12 min easy run (RPE ~3, let HR drop slowly)","notes":"Pace may vary week-to-week due to fatigue, weather, etc. Maintaining RPE is more important than maintaining a specific pace number. Tempo duration increases ~2-3 min per week — running the same pace for longer IS progress."}},{"day":5,"focus":"Full Body Lift (Calisthenics/Plyos)","lift":"phase1_calisthenics","conditioning":null},{"day":6,"focus":"LSD","lift":null,"conditioning":{"type":"long_run","duration":"75 min","zone":2,"rpe":"5-6","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Discipline is key — resist going harder than zone 2. Use at least 2 zone 2 gauges."}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest"}}]},{"week":5,"days":[{"day":1,"focus":"Full Body Strength + Repeats","lift":"phase1_lower","conditioning":{"type":"repeats","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides at goal pace)","sets":6,"distance":"800m","pace":"4-8 sec/mi FASTER than current 2-mile pace (same as week 4, one additional rep)","paceCalculation":{"step1":"Start with your known 2-mile time","step2":"Divide by 2 to get per-mile pace (e.g. 2-mile in 13:00 = 6:30/mi)","step3":"Subtract the prescribed seconds-per-mile to find target pace","step4_400m":"Convert to 400m: multiply mile pace in seconds by 0.25 (e.g. 6:18/mi = 378 sec × 0.25 = 94.5 sec = 1:35)","step4_800m":"Convert to 800m: multiply mile pace in seconds by 0.5","step4_1K":"Convert to 1K: multiply mile pace in seconds by 0.621"},"workRestRatio":"1:1 — if you run a repeat in X seconds, rest X seconds","restDuration":"Same as interval time (e.g. if you run 3:10, rest 3:10)","restActivity":"Walk first 2/3 of rest period, jog last 1/3 into next repeat","rpe":"8 for first half of session, 9 for last few repeats","goal":"Each repeat inside pace range; last repeat should be your best","keyRule":"Repeats are NOT all-out sprints. The pace you run should be REPEATABLE. Avoid going out too hard early.","cooldown":"5-10 min easy jog","notes":"1 more rep than week 4. Use week 4 performance data to calibrate pace."}},{"day":2,"focus":"Easy Run","lift":null,"conditioning":{"type":"easy_run","duration":"35 min","zone":2,"rpe":"4-5","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Can substitute non-impact zone 2 (bike, row, ski, elliptical) if legs are sore from previous day"}},{"day":3,"focus":"Full Body Lift (Upper) + Optional Easy Conditioning","lift":"phase1_upper","conditioning":{"type":"optional_easy","options":["15-20 min incline walk 8-10% grade","30-45 min ruck at walk-only pace"],"notes":"Ruck is more impactful than incline walk but intended for those maintaining a weekly rucking routine. DO NOT run — running will interfere with run progress."}},{"day":4,"focus":"Tempo","lift":null,"conditioning":{"type":"tempo","warmup":"12 min easy run (RPE 3-4, zone 2)","duration":"22 min","pace":"Current 5-mile pace +8-15 sec/mi (e.g. if 5-mile pace is 7:00/mi, run tempo at 7:08-7:15/mi)","rpe":"7-8 overall (~7.5 target)","effortCue":"Comfortably hard — do NOT turn into a time trial","selfCheck":"After finishing, ask: Could I have run this same pace for another 15 minutes? If clearly YES = well paced. If questionable = went a bit too hard. If no = went too hard.","cooldown":"12 min easy run (RPE ~3, let HR drop slowly)","notes":"Pace may vary week-to-week due to fatigue, weather, etc. Maintaining RPE is more important than maintaining a specific pace number. Tempo duration increases ~2-3 min per week — running the same pace for longer IS progress."}},{"day":5,"focus":"Full Body Lift (Calisthenics/Plyos)","lift":"phase1_calisthenics","conditioning":null},{"day":6,"focus":"LSD with Pickups","lift":null,"conditioning":{"type":"long_run_with_pickups","totalDuration":"75 min","basePace":"Zone 2 (RPE 5-6)","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"pickupCount":6,"pickupWindow":"Any time after 10:00 in and before 70:00 of run","pickupPace":"Between goal 2-mile pace and goal 5-mile pace","pickupDuration":"1:30","pickupRpe":"7-8","recovery":"Slow back to zone 2 / easy pace after each pickup; HR does not need to be in zone 2 during pickups","notes":"Pacing example: Same pace targets as week 3 pickups — just 1 more pickup and 5 more minutes total"}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest"}}]},{"week":6,"days":[{"day":1,"focus":"Full Body Strength + Hill Repeats","lift":"phase1_lower","conditioning":{"type":"hill_repeats","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides)","sets":12,"duration":"1:00 each","surface":"Treadmill @ 5-6% incline (or outdoor hill equivalent — moderately steep grade)","pace":"Match week 3 hill repeat pace or RPE 8-9 — goal is to repeat or increase pace each round","rest":"2:00","restActivity":"Hop off treadmill / walk or trot back to base of hill","rpe":"8-9","goal":"Repeat or increase pace each round","cooldown":"5-10 min easy jog","notes":"Pre-TT week. Hill repeats instead of track repeats allow adequate stimulus with reduced impact and better recovery heading into time trials next week."}},{"day":2,"focus":"Easy Run","lift":null,"conditioning":{"type":"easy_run","duration":"40 min","zone":2,"rpe":"4-5","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Can substitute non-impact zone 2 (bike, row, ski, elliptical) if legs are sore from previous day"}},{"day":3,"focus":"Full Body Lift (Upper) + Optional Easy Conditioning","lift":"phase1_upper","conditioning":{"type":"optional_easy","options":["25 min incline walk 8-10% grade","30-45 min ruck at walk-only pace"],"notes":"Ruck is more impactful than incline walk but intended for those maintaining a weekly rucking routine. DO NOT run — running will interfere with run progress."}},{"day":4,"focus":"Tempo","lift":null,"conditioning":{"type":"tempo","warmup":"12 min easy run (RPE 3-4, zone 2)","duration":"25 min","pace":"2-5 sec/mi FASTER than week 5 tempo pace (e.g. if week 5 was 7:10/mi, aim for 7:05-7:08/mi)","rpe":"7-8 overall (~7.5 target)","effortCue":"Comfortably hard — do NOT turn into a time trial","selfCheck":"After finishing, ask: Could I have run this same pace for another 15 minutes? If clearly YES = well paced. If questionable = went a bit too hard. If no = went too hard.","cooldown":"12 min easy run (RPE ~3, let HR drop slowly)","notes":"Pace may vary week-to-week due to fatigue, weather, etc. Maintaining RPE is more important than maintaining a specific pace number. Tempo duration increases ~2-3 min per week — running the same pace for longer IS progress."}},{"day":5,"focus":"Full Body Lift (Calisthenics/Plyos)","lift":"phase1_calisthenics","conditioning":null},{"day":6,"focus":"Easy Run (pre-TT prep)","lift":null,"conditioning":{"type":"easy_run","duration":"25-40 min","zone":2,"rpe":"4-5","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"About to enter time trial week. This run should be as low fatigue as possible. The goal is to arrive at TT week fresh."}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest"}}]}]},{"id":"time_trial_week","name":"Phase 1 Time Trial Week","programWeek":7,"days":[{"day":1,"focus":"2-Mile Time Trial","lift":{"type":"optional","label":"Optional Diagnostic ACFT or modified ACFT","notes":"Only if preparing for PT/ACFT assessment"},"conditioning":{"type":"time_trial","distance":"2 miles","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides at goal pace)","effort":"Max effort — run as fast as possible","rpe":"10 overall (8 first 1/3, 9 middle 1/3, 9.5-10 last 1/3)","pacing":"Most common mistake: going out too hot. If your first 400m is faster than any repeat you've done so far, you went out too hot.","cooldown":"5-8 min easy jog","notes":"Record your time — this becomes the pacing anchor for Phase 2 repeats"}},{"day":2,"focus":"Full Body Lift — Lower (Deload)","lift":{"label":"Full Body Lift (Lower Deload) — -1 set per movement","sessionNotes":["Volume decreases are preferred deload method. May also decrease intensity/proximity to failure.","This week's lifting is to maintain movement quality while allowing max performance on TTs"],"exercises":[{"name":"Bumper Plate Jump Pushup","sets":2,"reps":10,"type":"plyo","group":"plyoA","rest_ab":"60-90 sec between A and B"},{"name":"Lateral Depth Jump into Vert","sets":2,"reps":"2 ea","type":"plyo","group":"plyoB","rest_ab":"60-90 sec between A and B"},{"name":"Hamstring Curl","sets":2,"reps":"10-12","type":"isolation","rir":1,"rest":"45-60 sec"},{"name":"Squat","sets":1,"reps":"2x6-10","type":"compound","rir":"1-2","rest":"2-3 min"},{"name":"Neutral Chins","sets":2,"reps":"6-8","type":"compound","rir":"1-2","rest":"2-3 min"},{"name":"RDL","sets":1,"reps":"8-10","type":"compound","rir":"1-2","rest":"2-3 min"},{"name":"Deficit Pushups w/ Pause","sets":1,"reps":"8-10","type":"compound","rir":1,"rest":"2-3 min"},{"name":"Straight Leg Situps","sets":1,"reps":"12-20","type":"isolation","rir":1,"rest":"45-60 sec"}]},"conditioning":null},{"day":3,"focus":"REST","lift":null,"conditioning":{"type":"rest"}},{"day":4,"focus":"5-Mile Time Trial","lift":null,"conditioning":{"type":"time_trial","distance":"5 miles","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides at goal pace)","effort":"Max effort — run as fast as possible","rpe":"10 overall (8 first 1/3, 9 middle 1/3, 9.5-10 last 1/3)","pacing":"Same caution as 2-mile: do not go out too hot. Pacing is the skill that separates good runs from great runs.","cooldown":"5-8 min easy jog","notes":"Record your time — this becomes the pacing anchor for Phase 2 tempo and fartlek"}},{"day":5,"focus":"Full Body Lift — Upper (Deload)","lift":{"label":"Full Body Lift (Upper Deload) — -1 set per movement","sessionNotes":["Volume decreases are preferred deload method."],"exercises":[{"name":"Backward Drags","prescription":"3-5 min","type":"warmup","notes":"Light/prep stim"},{"name":"Face Pull","sets":1,"reps":"15-10","type":"isolation","rir":1,"rest":"45-60 sec"},{"name":"Deficit Pushup","sets":2,"reps":"10-15","type":"compound","rir":1,"rest":"2-3 min"},{"name":"Incline DB Press","sets":2,"reps":"8-12","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"2a"},{"name":"Chest Supported DB Row","sets":2,"reps":"8-12","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"2b"},{"name":"Rack Chins","sets":2,"reps":"6-10","type":"compound","rir":"1-2","rest":"60-90 sec","superset":"3a"},{"name":"Dips","sets":1,"reps":"8-10","type":"compound","rir":"1-2","rest":"2-3 min"}]},"conditioning":null},{"day":6,"focus":"REST","lift":null,"conditioning":{"type":"rest","notes":"Light movement encouraged — walking is great."}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest","notes":"Next week: run deload with 2 lifting days. Prepare for Phase 2."}}]},{"id":"deload_week","name":"Deload Week","programWeek":8,"days":[{"day":1,"focus":"Easy Run with Strides","lift":null,"conditioning":{"type":"easy_run_with_strides","totalDuration":"40 min","basePace":"Zone 2 (RPE 4-5)","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"strideCount":4,"strideWindow":"Any time AFTER 8:00 into run and BEFORE 33:00 (ensures warmup before and cooldown after)","stridePace":"Speed up to last week's 5-mile TT pace, hold for 60-90 sec","strideRpe":"7-8","recovery":"Slow back to zone 2 after each stride","notes":"Run deload this week before Phase 2. Lifting still 2 days. Strides keep some speed stimulus without high fatigue."}},{"day":2,"focus":"Full Body Lift (Lower) + Non-Impact Conditioning","lift":"phase1_lower","conditioning":{"type":"non_impact_cardio","options":["Incline walk 30-45 min","Outdoor walk 60 min","Bike/row/ski/elliptical 30-45 min"],"zone":"Zone 1-2 (can do zone 1 / high zone 1 — recovery-focused)","rpe":"3-4","notes":"Goal is recovery and restoration, not fitness. Can opt for just an easy walk in nature."}},{"day":3,"focus":"REST","lift":null,"conditioning":{"type":"rest"}},{"day":4,"focus":"Easy Run","lift":null,"conditioning":{"type":"easy_run","duration":"30 min","zone":2,"rpe":"4-5","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"High zone 1 / low zone 2 — very easy. RPE 3-4."}},{"day":5,"focus":"Full Body Lift (Upper)","lift":"phase1_upper","conditioning":null},{"day":6,"focus":"Easy Run / Non-Impact","lift":null,"conditioning":{"type":"easy_run_or_non_impact","duration":"30-40 min","zone":"Low-mid zone 2","rpe":"4-5","options":["30-40 min easy run at low-mid zone 2","30-40 min non-impact: bike, row, elliptical"],"pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."}}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest","notes":"Prepare for Phase 2!"}}]},{"id":"phase2","name":"Phase 2","programWeeks":"9-13","daysPerWeek":5,"repeatPacingGuide":{"baseTime":"Use your Week 7 2-mile TT time as the pacing anchor for Day 1 repeats","calculation":"2-mile time ÷ 2 = per-mile pace. Subtract prescribed seconds. Convert to 1K (×0.621) or 400m (×0.25).","pacingExample":"If week 7 2-mile was 12:30 (6:15/mi), 1K target at 2-4 sec/mi faster = 6:11-6:13/mi = ~3:50-3:51 per 1K","subsequentWeeks":"After week 1, base pace off actual previous week performance (+/- 1-3 sec)"},"weeks":[{"week":1,"days":[{"day":1,"focus":"Repeats + Optional Calisthenics","lift":"phase2_optional_calisthenics","conditioning":{"type":"repeats","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides at goal pace)","sets":5,"distance":"1K","pace":"2-4 sec/mi FASTER than week 7 2-mile pace (e.g. if 2-mile pace is 6:15/mi, target 6:11-6:13/mi per 1K = ~3:50-3:51 per K)","paceCalculation":{"step1":"Start with your known 2-mile time","step2":"Divide by 2 to get per-mile pace (e.g. 2-mile in 13:00 = 6:30/mi)","step3":"Subtract the prescribed seconds-per-mile to find target pace","step4_400m":"Convert to 400m: multiply mile pace in seconds by 0.25 (e.g. 6:18/mi = 378 sec × 0.25 = 94.5 sec = 1:35)","step4_800m":"Convert to 800m: multiply mile pace in seconds by 0.5","step4_1K":"Convert to 1K: multiply mile pace in seconds by 0.621"},"workRestRatio":"1:1","restDuration":"Same as interval time (e.g. if 1K in 3:51, rest 3:51)","restActivity":"Walk first 2/3 of rest period, jog last 1/3","rpe":"8 for first half of session, 9 for last few repeats","goal":"Each repeat inside pace range; last repeat should be your best","keyRule":"Repeats are NOT all-out sprints. The pace you run should be REPEATABLE. Avoid going out too hard early.","cooldown":"5-10 min easy jog","notes":"Phase 2 repeats are done on their own day (no lift). Use week 7 2-mile TT for initial pacing."}},{"day":2,"focus":"Full Body Lift + Easy Run","lift":"phase2_full_body","conditioning":{"type":"easy_run","duration":"15-20 min","zone":2,"rpe":"4-5","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Low fatigue. This follows a lift session — keep it easy."}},{"day":3,"focus":"REST","lift":null,"conditioning":{"type":"rest"}},{"day":4,"focus":"Fartlek","lift":null,"conditioning":{"type":"fartlek","warmup":"12 min easy run (zone 2, RPE 3-4)","rounds":3,"hardDuration":"5:00","hardPace":"3-5 sec/mi FASTER than 5-mile TT pace (e.g. if 5-mile last week was 34:00 = 6:48/mi, hard portions = 6:43-6:45/mi)","hardRpe":"8-8.5","easyDuration":"3:00","easyPace":"As easy as needed to recover — slow jog. NO WALKING.","easyRpe":"4-5","cooldown":"12 min easy run","totalHardTime":"15 min","notes":"Fartlek = Swedish 'speed play'. Think of it as a combo between tempo effort and repeat effort, with incomplete rest (slow jog). More mentally engaging than tempo runs."}},{"day":5,"focus":"Full Body Lift (Upper)","lift":"phase2_upper","conditioning":null},{"day":6,"focus":"LSD with Embedded Tempo","lift":null,"conditioning":{"type":"long_run_embedded_tempo","totalDuration":"60 min","structure":[{"segment":"First 20:00","type":"Zone 2","rpe":"5-6","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."}},{"segment":"Middle 15:00","type":"Steady Tempo","pace":"TT mile pace +/- 12-15 sec/mi (approximately your goal 6.5 mile pace)","rpe":"7-8"},{"segment":"Last 25:00","type":"Zone 2","rpe":"5-6","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."}}],"notes":"Long run with a steady tempo sandwiched in. Goal: accumulate mileage while running at faster speeds to improve 5-mile time."}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest"}}]},{"week":2,"days":[{"day":1,"focus":"Repeats + Optional Calisthenics","lift":"phase2_optional_calisthenics","conditioning":{"type":"repeats","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides at goal pace)","sets":5,"distance":"1K","pace":"Match or beat week 9 pace by 1-3 sec/K (e.g. if averaged 3:51/K last week, target 3:48-3:51 this week)","workRestRatio":"1:1","restDuration":"Same as interval time","restActivity":"Walk first 2/3 of rest period, jog last 1/3","rpe":"8 for first half of session, 9 for last few repeats","goal":"Each repeat inside pace range; last repeat should be your best","keyRule":"Repeats are NOT all-out sprints. The pace you run should be REPEATABLE. Avoid going out too hard early.","cooldown":"5-10 min easy jog"}},{"day":2,"focus":"Full Body Lift + Easy Run","lift":"phase2_full_body","conditioning":{"type":"easy_run","duration":"15-20 min","zone":2,"rpe":"4-5","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Can substitute non-impact zone 2 (bike, row, ski, elliptical) if legs are sore from previous day"}},{"day":3,"focus":"REST","lift":null,"conditioning":{"type":"rest"}},{"day":4,"focus":"Tempo","lift":null,"conditioning":{"type":"tempo","warmup":"12 min easy run (RPE 3-4, zone 2)","duration":"30 min","pace":"8-15 sec/mi SLOWER than your week 7 5-mile TT pace (e.g. if week 7 5-mile was 32:30 = 6:30/mi, aim for 6:38-6:45/mi)","rpe":"7-8 overall (~7.5 target)","effortCue":"Comfortably hard — do NOT turn into a time trial","selfCheck":"After finishing, ask: Could I have run this same pace for another 15 minutes? If clearly YES = well paced. If questionable = went a bit too hard. If no = went too hard.","cooldown":"12 min easy run (RPE ~3, let HR drop slowly)","notes":"Pacing example: week 7 5-mile 32:30 (6:30/mi) → tempo at 6:38-6:45/mi. Pace may vary week-to-week due to fatigue, weather, etc. Maintaining RPE is more important than maintaining a specific pace number. Tempo duration increases ~2-3 min per week — running the same pace for longer IS progress."}},{"day":5,"focus":"Full Body Lift (Upper)","lift":"phase2_upper","conditioning":null},{"day":6,"focus":"LSD with Pickups","lift":null,"conditioning":{"type":"long_run_with_pickups","totalDuration":"70 min","basePace":"Zone 2 (RPE 5-6)","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"pickupCount":5,"pickupWindow":"Any time after 10:00 & before 40:00 of run","pickupPace":"Between goal 2-mile pace and goal 5-mile pace, hold for 2:00","pickupDuration":"2:00","pickupRpe":"7-8","recovery":"Slow back to zone 2 / easy pace after each pickup; HR does not need to be in zone 2 during pickups","notes":"Pacing example: Goal 2-mile=12:00 (6:00/mi) & goal 5-mile=32:30 (6:30/mi) → hold ~6:15/mi for each pickup"}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest"}}]},{"week":3,"days":[{"day":1,"focus":"Repeats (2-Part) + Optional Calisthenics","lift":"phase2_optional_calisthenics","conditioning":{"type":"repeats_two_part","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides at goal pace)","part1":{"sets":4,"distance":"1K","pace":"Match or beat week 10 pace by 1-3 sec/K","workRestRatio":"1:1","restDuration":"Same as interval time","restActivity":"Walk first 2/3 of rest period, jog last 1/3 each round","goal":"Each repeat at similar paces; last repeat best"},"partBreak":"5:00 full rest between Part 1 and Part 2","part2":{"sets":3,"distance":"400m","pace":"2-4 sec/mi FASTER than your 1K pace (e.g. if 1K pace is 6:10/mi, run 400s at 6:06-6:08/mi = ~1:32-1:33 per 400m)","workRestRatio":"1:1","restDuration":"Same as 400m time","restActivity":"Walk 3/4 of rest, jog last 1/4 into next lap","goal":"Last lap best lap"},"rpe":"8 for first half of session, 9 for last few repeats","keyRule":"Repeats are NOT all-out sprints. The pace you run should be REPEATABLE. Avoid going out too hard early.","cooldown":"5-10 min easy jog","notes":"2-part session. Complete all 1Ks with 1:1 work rest, then take a 5:00 break before the 400s. Pacing example: if week 10 avg was 3:50/K (6:10/mi), target 3:47-3:50 for 1Ks, then 400s at 6:06-6:08/mi (~1:32-1:33)."}},{"day":2,"focus":"Full Body Lift + Easy Run","lift":"phase2_full_body","conditioning":{"type":"easy_run","duration":"15-20 min","zone":2,"rpe":"4-5","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Can substitute non-impact zone 2 (bike, row, ski, elliptical) if legs are sore from previous day"}},{"day":3,"focus":"REST","lift":null,"conditioning":{"type":"rest"}},{"day":4,"focus":"Hill Repeats","lift":null,"conditioning":{"type":"hill_repeats","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides)","sets":8,"duration":"1:30 each","surface":"Treadmill @ 5-6% incline (or outdoor hill equivalent — moderately steep grade)","pace":"Match week 6 hill repeat pace (RPE 8-9)","rest":"2:30","restActivity":"Hop off treadmill / walk or trot back to base of hill","rpe":"8-9","goal":"Repeat or increase pace each round","cooldown":"5-10 min easy jog","notes":"Hill day instead of fartlek/tempo — continues to train speed while giving joints relief from ground impact."}},{"day":5,"focus":"Full Body Lift (Upper)","lift":"phase2_upper","conditioning":null},{"day":6,"focus":"LSD","lift":null,"conditioning":{"type":"long_run","duration":"80 min","zone":2,"rpe":"5-6","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Long, steady-paced run. No speed this week — allow mental/physical recovery heading into the home stretch of the program."}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest"}}]},{"week":4,"days":[{"day":1,"focus":"Repeats (2-Part) + Optional Calisthenics","lift":"phase2_optional_calisthenics","conditioning":{"type":"repeats_two_part","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides at goal pace)","part1":{"sets":4,"distance":"1K","pace":"Match +/- 1-2 sec from week 10 (P2W2) pace","workRestRatio":"1:1","restDuration":"Same as interval time","restActivity":"Walk first 1/2 of rest, jog last 1/2 into next round","goal":"Each repeat inside range; last lap best lap"},"partBreak":"4:00 full rest","part2":{"sets":4,"distance":"400m","pace":"2-4 sec/mi FASTER than 1K pace","workRestRatio":"1:1","restDuration":"Same as 400m time","restActivity":"Walk 3/4 of rest, jog last 1/4 into next lap","goal":"Last lap best lap"},"rpe":"8 for first half of session, 9 for last few repeats","keyRule":"Repeats are NOT all-out sprints. The pace you run should be REPEATABLE. Avoid going out too hard early.","cooldown":"5-10 min easy jog","notes":"Same as last week with 1 extra 400m in part 2. Rest activity for 1Ks shifts slightly — walking only first half now (vs first 2/3 last week), indicating slightly more fitness."}},{"day":2,"focus":"Full Body Lift + Easy Run","lift":"phase2_full_body","conditioning":{"type":"easy_run","duration":"15-20 min","zone":2,"rpe":"4-5","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Can substitute non-impact zone 2 (bike, row, ski, elliptical) if legs are sore from previous day"}},{"day":3,"focus":"REST","lift":null,"conditioning":{"type":"rest"}},{"day":4,"focus":"Fartlek","lift":null,"conditioning":{"type":"fartlek","warmup":"12 min easy run (zone 2, RPE 3-4)","rounds":3,"hardDuration":"6:00","hardPace":"3-5 sec/mi FASTER than 5-mile TT pace (e.g. if hard portions in week 9 were at 6:42/mi, this week target 6:37-6:39/mi)","hardRpe":"8-8.5","easyDuration":"2:00","easyPace":"As easy as needed to recover — slow jog. NO WALKING.","easyRpe":"4-5","cooldown":"12 min easy run","notes":"Hard portions are 1 min longer AND easy portions are 1 min shorter than week 9. This is significantly harder. Pace increase delta is larger because the hard duration is shorter — expect to push harder."}},{"day":5,"focus":"Full Body Lift (Upper)","lift":"phase2_upper","conditioning":null},{"day":6,"focus":"LSD with Strong Finish","lift":null,"conditioning":{"type":"long_run_strong_finish","totalDuration":"70 min","structure":[{"segment":"First 45:00","type":"Zone 2","rpe":"5-6","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."}},{"segment":"Next 15:00","type":"Steady Tempo","pace":"Week 8 deload-week tempo pace + 5-8 sec/mi (slightly slower than a fresh tempo because you've already run 45 min)","rpe":"7-8"}],"cooldown":"10 min easy jog","notes":"Long run with a tempo sandwiched toward the end. Tempo pace should be more conservative than a standalone tempo — you've been running for 45 min already."}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest"}}]},{"week":5,"days":[{"day":1,"focus":"Repeats (2-Part) + Optional Calisthenics","lift":"phase2_optional_calisthenics","conditioning":{"type":"repeats_two_part","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides at goal pace)","part1":{"sets":3,"distance":"1K","pace":"1-3 sec/K FASTER than week 11 (P2W3) 1K pace","workRestRatio":"1:1","restDuration":"Same as interval time","restActivity":"Walk first 1/2 of rest, jog last 1/2","goal":"Each repeat inside range; last lap best lap"},"partBreak":"4:00 full rest","part2":{"sets":8,"distance":"400m","pace":"2-4 sec/mi FASTER than 1K pace","workRestRatio":"1:1","restDuration":"Same as 400m time","restActivity":"Walk 3/4 of rest, jog last 1/4 into next lap","goal":"Last lap best lap"},"rpe":"8 for first half of session, 9 for last few repeats","keyRule":"Repeats are NOT all-out sprints. The pace you run should be REPEATABLE. Avoid going out too hard early.","cooldown":"5-10 min easy jog","notes":"Final repeat session before test week. 1 fewer 1K than last time, but 4 more 400s. Make it count."}},{"day":2,"focus":"Full Body Lift + Easy Run","lift":"phase2_full_body","conditioning":{"type":"easy_run","duration":"15-20 min","zone":2,"rpe":"4-5","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"notes":"Can substitute non-impact zone 2 (bike, row, ski, elliptical) if legs are sore from previous day"}},{"day":3,"focus":"REST","lift":null,"conditioning":{"type":"rest"}},{"day":4,"focus":"Tempo","lift":null,"conditioning":{"type":"tempo","warmup":"12 min easy run (RPE 3-4, zone 2)","duration":"32 min","pace":"Match or slightly faster than week 9 (P2W1) tempo pace","rpe":"7-8 overall (~7.5 target)","effortCue":"Comfortably hard — do NOT turn into a time trial","selfCheck":"After finishing, ask: Could I have run this same pace for another 15 minutes? If clearly YES = well paced. If questionable = went a bit too hard. If no = went too hard.","cooldown":"12 min easy run (RPE ~3, let HR drop slowly)","notes":"Final tempo before test week. 32 min is the longest tempo of the program. Pace may vary week-to-week due to fatigue, weather, etc. Maintaining RPE is more important than maintaining a specific pace number. Tempo duration increases ~2-3 min per week — running the same pace for longer IS progress."}},{"day":5,"focus":"Full Body Lift (Upper)","lift":"phase2_upper","conditioning":null},{"day":6,"focus":"Easy Run with Pickups (reduced volume)","lift":null,"conditioning":{"type":"long_run_with_pickups","totalDuration":"50 min","basePace":"Zone 2 (RPE 5-6)","pacing":{"description":"Zone 2 — aerobic base effort","gauges":["Nasal breathing (preferred): able to breathe exclusively through nose","Heart rate: 154 BPM high end (180 minus age 26), 134-139 BPM low end (180 minus age minus 15-20)","Talk test: able to say 12 words in a row without gasping for air","RPE: 4-6 (4-5 for shorter easy runs, 5-6 for long runs)"],"notes":"Use at least 2 of the above gauges. HR monitor strap (e.g. Polar H9/H10) recommended over wrist device for accuracy."},"pickupCount":4,"pickupWindow":"Any time after 10:00 & before 40:00 of run","pickupPace":"Between goal 2-mile pace and goal 5-mile pace, hold for 1:30","pickupDuration":"1:30","pickupRpe":"7-8","recovery":"Slow back to zone 2 / easy pace after each pickup; HR does not need to be in zone 2 during pickups","notes":"Pacing example: Reduced volume going into test week. Goal 2-mile=12:00, goal 5-mile=32:30 → hold ~6:15/mi for pickups"}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest"}}]}]},{"id":"test_week","name":"Test Week (Optional)","programWeek":14,"optional":true,"notes":"Do NOT do this if approaching a mandated PT event — use that event as your time trial.","days":[{"day":1,"focus":"REST","lift":null,"conditioning":{"type":"rest","notes":"All lifting this week is optional. For best times, wait until after both time trials are complete before lifting."}},{"day":2,"focus":"2-Mile Time Trial","lift":{"type":"optional","label":"Optional ACFT or modified ACFT"},"conditioning":{"type":"time_trial","distance":"2 miles","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides at goal pace)","effort":"Max effort — run as fast as possible","rpe":"10 overall","notes":"Run on a track or flat course if possible. Apply all pacing lessons learned throughout the program."}},{"day":3,"focus":"REST","lift":null,"conditioning":{"type":"rest"}},{"day":4,"focus":"Shakeout Run","lift":null,"conditioning":{"type":"easy_run","duration":"20-30 min","rpe":"4","notes":"Very easy shakeout. Can substitute a non-impact session (bike, walk) if preferred."}},{"day":5,"focus":"5-Mile Time Trial","lift":null,"conditioning":{"type":"time_trial","distance":"5 miles","warmup":"Full run warmup (jog 5-10 min, dynamic stretching, 3-6 strides at goal pace)","effort":"Max effort — run as fast as possible","rpe":"10 overall","notes":"Track acceptable. Road or terrain with subtle rolling hills also fine."}},{"day":6,"focus":"REST","lift":null,"conditioning":{"type":"rest","notes":"Congrats — you have completed the program!"}},{"day":7,"focus":"REST","lift":null,"conditioning":{"type":"rest"}}]}]};
+
+let wkViewProgDay = null;
+let wkLogs = {};       // { dateStr: { sets:{}, condDone:false } }
+let restTimerInterval = null;
+let restTimerSecs = 0;
+let fbWkLogRef = null;
+
+function wkDateStr(progDay) {
+  const d = new Date(PROGRAM_START);
+  d.setDate(d.getDate() + progDay);
+  return d.toISOString().slice(0,10);
+}
+
+function getCurrentProgDay() {
+  const now = new Date();
+  const diff = Math.floor((now - PROGRAM_START) / 86400000);
+  return Math.max(0, diff);
+}
+
+function getProgDayData(progDay) {
+  // progDay is 0-indexed from program start
+  const week = Math.floor(progDay / 7); // 0-indexed
+  const dayInWeek = (progDay % 7) + 1; // 1-7
+  const phases = PROGRAM_DATA.phases;
+  let phaseObj, weekObj, dayObj;
+
+  if (week < 6) {
+    phaseObj = phases.find(p => p.id === 'phase1');
+    weekObj  = phaseObj.weeks[week];
+    dayObj   = weekObj.days.find(d => d.day === dayInWeek);
+    return { phaseName:'Phase 1', phaseWeek: week+1, programWeek: week+1,
+             day: dayInWeek, dayObj, liftTemplates: PROGRAM_DATA.liftTemplates };
+  }
+  if (week === 6) {
+    phaseObj = phases.find(p => p.id === 'time_trial_week');
+    dayObj   = phaseObj.days.find(d => d.day === dayInWeek);
+    return { phaseName:'TT Week', phaseWeek: 1, programWeek: 7,
+             day: dayInWeek, dayObj, liftTemplates: PROGRAM_DATA.liftTemplates };
+  }
+  if (week === 7) {
+    phaseObj = phases.find(p => p.id === 'deload_week');
+    dayObj   = phaseObj.days.find(d => d.day === dayInWeek);
+    return { phaseName:'Deload', phaseWeek: 1, programWeek: 8,
+             day: dayInWeek, dayObj, liftTemplates: PROGRAM_DATA.liftTemplates };
+  }
+  if (week >= 8 && week < 13) {
+    phaseObj = phases.find(p => p.id === 'phase2');
+    weekObj  = phaseObj.weeks[week - 8];
+    dayObj   = weekObj.days.find(d => d.day === dayInWeek);
+    return { phaseName:'Phase 2', phaseWeek: week-7, programWeek: week+1,
+             day: dayInWeek, dayObj, liftTemplates: PROGRAM_DATA.liftTemplates };
+  }
+  // Test week or beyond
+  phaseObj = phases.find(p => p.id === 'test_week');
+  if (phaseObj) {
+    dayObj = phaseObj.days.find(d => d.day === dayInWeek);
+    return { phaseName:'Test Week', phaseWeek: 1, programWeek: 14,
+             day: dayInWeek, dayObj, liftTemplates: PROGRAM_DATA.liftTemplates };
+  }
+  return null;
+}
+
+function wkNavigate(dir) {
+  const total = 14 * 7; // 14 program weeks
+  wkViewProgDay = Math.max(0, Math.min(total - 1, wkViewProgDay + dir));
+  renderWorkouts();
+  loadWkLogForDate(wkDateStr(wkViewProgDay));
+}
+
+window.wkGoToday = () => {
+  wkViewProgDay = getCurrentProgDay();
+  renderWorkouts();
+  loadWkLogForDate(wkDateStr(wkViewProgDay));
+};
+
+function renderWorkouts() {
+  if (wkViewProgDay === null) wkViewProgDay = getCurrentProgDay();
+  const wrap = document.getElementById('wk-wrap');
+  if (!wrap) return;
+
+  const now = new Date();
+  const isBeforeStart = now < PROGRAM_START;
+  if (isBeforeStart && wkViewProgDay === 0) {
+    const startFormatted = PROGRAM_START.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+    wrap.innerHTML = '<div class="wk-nav-hdr">' +
+      '<button class="wk-nav-btn" onclick="wkNavigate(-1)">&#8249;</button>' +
+      '<div class="wk-nav-info"><div class="wk-phase-lbl">Program not started</div>' +
+      '<div class="wk-day-lbl">Base Phase</div></div>' +
+      '<button class="wk-nav-btn" onclick="wkNavigate(1)">&#8250;</button></div>' +
+      '<div class="wk-pre-start"><div class="wk-pre-start-title">Program Starts ' + startFormatted + '</div>' +
+      '<div class="wk-pre-start-sub">Complete the optional base phase until you're at 150 min/week of zone-2 running.<br><br>' +
+      'Base schedule: Mon/Wed/Fri 20-min zone-2 run + Sat 25-30 min.<br>' +
+      'Add 5 min per run per week until 150 min total.</div></div>';
+    return;
+  }
+
+  const data = getProgDayData(wkViewProgDay);
+  if (!data) { wrap.innerHTML = '<div class="wk-rest-day">End of program</div>'; return; }
+
+  const { phaseName, phaseWeek, day, dayObj } = data;
+  const dateStr = wkDateStr(wkViewProgDay);
+  const isToday = dateStr === new Date().toISOString().slice(0,10);
+  const log = wkLogs[dateStr] || { sets: {}, condDone: false };
+
+  let html = '';
+
+  // Nav header
+  html += '<div class="wk-nav-hdr">' +
+    '<button class="wk-nav-btn" onclick="wkNavigate(-1)">&#8249;</button>' +
+    '<div class="wk-nav-info">' +
+    '<div class="wk-phase-lbl">' + phaseName + (phaseWeek > 1 ? ' · Week ' + phaseWeek : '') + (isToday ? ' · TODAY' : '') + '</div>' +
+    '<div class="wk-day-lbl">Day ' + day + '</div>' +
+    '<div class="wk-focus-lbl">' + (dayObj ? dayObj.focus : '') + '</div>' +
+    '</div>' +
+    '<button class="wk-nav-btn" onclick="wkNavigate(1)">&#8250;</button>' +
+    '</div>';
+  if (!isToday) html += '<div style="text-align:center;padding:6px 0;"><button class="wk-today-btn" onclick="wkGoToday()">Jump to Today</button></div>';
+
+  if (!dayObj || dayObj.focus === 'REST') {
+    html += '<div class="wk-rest-day">❄ Rest Day</div>';
+    wrap.innerHTML = html;
+    return;
+  }
+
+  // LIFT section
+  const liftKey = dayObj.lift;
+  if (liftKey) {
+    const liftTmpl = liftKey.startsWith('{') ? null : data.liftTemplates[liftKey];
+    const liftData = liftTmpl || (typeof dayObj.lift === 'object' ? dayObj.lift : null);
+    if (liftData) {
+      html += '<div class="wk-section">';
+      html += '<div class="wk-sec-hdr">LIFT — ' + (liftData.label || 'Strength') + '</div>';
+      // Session notes collapsible
+      const notes = liftData.sessionNotes || [];
+      if (notes.length) {
+        html += '<div class="wk-session-notes">' +
+          '<div class="wk-session-notes-hdr" onclick="this.nextElementSibling.classList.toggle('open')">' +
+          '<span>Session Notes</span><span id="wk-snotes-arrow">▾</span></div>' +
+          '<div class="wk-session-notes-body">' +
+          notes.map(n => '<div class="wk-session-note">'+escHtml(n)+'</div>').join('') +
+          '</div></div>';
+      }
+      // Exercises
+      const exs = liftData.exercises || [];
+      exs.forEach((ex, exIdx) => {
+        if (ex.type === 'warmup') {
+          html += '<div class="ex-warmup-card">' +
+            '<div><div class="ex-warmup-name">' + escHtml(ex.name) + '</div>' +
+            (ex.notes ? '<div class="ex-warmup-note">' + escHtml(ex.notes) + '</div>' : '') +
+            '</div>' +
+            '<div class="ex-warmup-presc">' + escHtml(ex.prescription || '') + '</div></div>';
+          return;
+        }
+        if (ex.type === 'plyo') {
+          const numSets = ex.sets || 3;
+          html += '<div class="ex-card">' +
+            '<div class="ex-card-hdr">' +
+            '<div class="ex-name-row">' +
+            '<span class="ex-ss-badge">' + escHtml(ex.group || ex.type) + '</span>' +
+            '<span class="ex-name">' + escHtml(ex.name) + '</span>' +
+            '<span class="ex-prescription">' + numSets + '×' + escHtml(String(ex.reps||'')) + '</span>' +
+            '</div>' +
+            (ex.rest_ab ? '<div class="ex-meta">' + escHtml(ex.rest_ab) + '</div>' : '') +
+            (ex.notes ? '<div class="ex-note">' + escHtml(ex.notes) + '</div>' : '') +
+            '</div>';
+          for (let s=0; s<numSets; s++) {
+            const setKey = liftKey+'__'+exIdx+'__'+s;
+            const setDone = log.sets[setKey] || false;
+            html += renderSetRow(setKey, s, ex.reps, null, setDone, 75, dateStr);
+          }
+          html += '</div>';
+          return;
+        }
+        // Regular exercise
+        const numSets = typeof ex.sets === 'number' ? ex.sets : 2;
+        const restSec = ex.type === 'compound' ? 150 : ex.type === 'isolation' ? 60 : 90;
+        html += '<div class="ex-card">' +
+          '<div class="ex-card-hdr">' +
+          '<div class="ex-name-row">' +
+          (ex.superset ? '<span class="ex-ss-badge">' + escHtml(ex.superset) + '</span>' : '') +
+          '<span class="ex-name">' + escHtml(ex.name) + '</span>' +
+          '<span class="ex-prescription">' + numSets + '×' + escHtml(String(ex.reps||'')) + '</span>' +
+          '</div>' +
+          '<div class="ex-meta">' +
+          (ex.rir !== undefined ? 'RIR ' + ex.rir : '') +
+          (ex.rest ? ' · rest ' + ex.rest : '') +
+          '</div>' +
+          (ex.notes ? '<div class="ex-note">' + escHtml(ex.notes) + '</div>' : '') +
+          '</div>';
+        for (let s=0; s<numSets; s++) {
+          const setKey = liftKey+'__'+exIdx+'__'+s;
+          const setDone = log.sets[setKey] || false;
+          const savedWeight = (log.weights || {})[setKey] || '';
+          html += renderSetRow(setKey, s, ex.reps, savedWeight, setDone, restSec, dateStr);
+        }
+        html += '</div>';
+      });
+      html += '</div>'; // wk-section
+    }
+  } else if (typeof dayObj.lift === 'object' && dayObj.lift !== null) {
+    // Inline lift definition (e.g. deload)
+    const liftData = dayObj.lift;
+    html += '<div class="wk-section">';
+    html += '<div class="wk-sec-hdr">LIFT — ' + (liftData.label || 'Strength') + '</div>';
+    const notes = liftData.sessionNotes || [];
+    if (notes.length) {
+      html += '<div class="wk-session-notes">' +
+        '<div class="wk-session-notes-hdr" onclick="this.nextElementSibling.classList.toggle('open')">' +
+        '<span>Session Notes</span><span>▾</span></div>' +
+        '<div class="wk-session-notes-body">' +
+        notes.map(n => '<div class="wk-session-note">'+escHtml(n)+'</div>').join('') +
+        '</div></div>';
+    }
+    (liftData.exercises||[]).forEach((ex, exIdx) => {
+      const numSets = typeof ex.sets === 'number' ? ex.sets : 1;
+      const restSec = ex.type === 'compound' ? 150 : ex.type === 'isolation' ? 60 : 90;
+      html += '<div class="ex-card"><div class="ex-card-hdr"><div class="ex-name-row">' +
+        (ex.superset ? '<span class="ex-ss-badge">' + escHtml(ex.superset) + '</span>' : '') +
+        '<span class="ex-name">' + escHtml(ex.name) + '</span>' +
+        '<span class="ex-prescription">' + numSets + '×' + escHtml(String(ex.reps||ex.prescription||'')) + '</span>' +
+        '</div>';
+      if (ex.rir !== undefined || ex.rest) html += '<div class="ex-meta">' + (ex.rir!==undefined?'RIR '+ex.rir:'') + (ex.rest?' · rest '+ex.rest:'') + '</div>';
+      if (ex.notes) html += '<div class="ex-note">' + escHtml(ex.notes) + '</div>';
+      html += '</div>';
+      const ek = 'inline__'+exIdx;
+      for (let s=0; s<numSets; s++) {
+        const setKey = ek+'__'+s;
+        const setDone = log.sets[setKey] || false;
+        const savedWeight = (log.weights||{})[setKey] || '';
+        html += renderSetRow(setKey, s, ex.reps||ex.prescription, savedWeight, setDone, restSec, dateStr);
+      }
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  // CONDITIONING section
+  const cond = dayObj.conditioning;
+  if (cond && cond.type !== 'rest') {
+    html += '<div class="wk-section">';
+    html += '<div class="wk-sec-hdr">CONDITIONING</div>';
+    html += renderConditioningBlock(cond, log.condDone || false, dateStr);
+    html += '</div>';
+  }
+
+  html += '<div style="height:20px;"></div>';
+  wrap.innerHTML = html;
+}
+
+function renderSetRow(setKey, setIdx, repsPresc, savedWeight, done, restSec, dateStr) {
+  const repsStr = typeof repsPresc === 'number' ? String(repsPresc)
+    : (Array.isArray(repsPresc) ? repsPresc.join('/') : (repsPresc||''));
+  // For descending reps like "15-10" across sets
+  let thisRep = repsStr;
+  if (repsStr.includes('-') && !repsStr.includes(' ')) {
+    const parts = repsStr.split('-');
+    if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+      thisRep = setIdx === 0 ? parts[0] : parts[1];
+    }
+  }
+  const safeDStr = escAttr(dateStr);
+  const safeSK = escAttr(setKey);
+  return '<div class="set-row' + (done?' done-row':'') + '" id="sr-'+escAttr(setKey)+'">' +
+    '<span class="set-num-badge">' + (setIdx+1) + '</span>' +
+    '<input class="set-weight-inp" type="number" placeholder="lbs" ' +
+    'value="' + escAttr(String(savedWeight||'')) + '" ' +
+    'oninput="wkSaveWeight('' + safeSK + '','' + safeDStr + '',this.value)" step="2.5">' +
+    '<span class="set-weight-unit">lbs</span>' +
+    '<span class="set-reps-lbl">' + escHtml(thisRep) + ' reps</span>' +
+    '<button class="set-check-btn' + (done?' done':'') + '" ' +
+    'onclick="wkToggleSet('' + safeSK + '','' + safeDStr + '',' + restSec + ')" ' +
+    'aria-label="Mark set done">✓</button>' +
+    '</div>';
+}
+
+function renderConditioningBlock(cond, condDone, dateStr) {
+  if (!cond || cond.type === 'rest') return '<div class="wk-rest-day">Rest</div>';
+  const safeDStr = escAttr(dateStr);
+  let typeLabel = condTypeLabel(cond.type);
+  let rows = '';
+
+  switch(cond.type) {
+    case 'easy_run':
+      rows += condRow('Duration', cond.duration || '');
+      rows += condRow('Zone', 'Zone 2 (RPE ' + (cond.rpe||'4-5') + ')');
+      rows += condRow('Pacing', 'Nasal breathing · HR 134-154 BPM · can say 12 words without gasping');
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    case 'easy_run_with_strides': case 'easy_run_strides':
+      rows += condRow('Total Run', cond.totalDuration || cond.duration || '');
+      rows += condRow('Base Pace', 'Zone 2 (RPE 4-5)');
+      rows += condRow('Strides', (cond.strideCount||'') + 'x during run');
+      rows += condRow('Stride Window', cond.strideWindow || '');
+      rows += condRow('Stride Pace', cond.stridePace || '');
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    case 'repeats':
+      rows += condRow('Workout', cond.sets + '×' + cond.distance);
+      rows += condRow('Warmup', cond.warmup || 'Run warmup (strides)');
+      rows += condRow('Pace', cond.pace || '');
+      rows += condRow('Work:Rest', (cond.workRestRatio||'1:1') + ' — ' + (cond.restDuration||'rest = lap time'));
+      rows += condRow('Rest Activity', cond.restActivity || '');
+      rows += condRow('RPE', cond.rpe || '');
+      rows += condRow('Goal', cond.goal || '');
+      if (cond.paceCalculation) {
+        const pc = cond.paceCalculation;
+        rows += condRow('Pace Calc', pc.step1 + '. ' + pc.step2 + '. ' + (pc.step3||''));
+      }
+      rows += condRow('Cooldown', cond.cooldown || '5-10 min easy jog');
+      if (cond.keyRule) rows += condRow('Key Rule', cond.keyRule);
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    case 'repeats_two_part':
+      rows += condRow('Warmup', cond.warmup || 'Run warmup (strides)');
+      if (cond.part1) {
+        rows += '<div class="cond-subcard"><div class="cond-subcard-lbl">PART 1</div>' +
+          '<div class="cond-val">' + escHtml(cond.part1.sets+'x'+cond.part1.distance) + '</div>' +
+          '<div class="cond-val"><strong>Pace:</strong> ' + escHtml(cond.part1.pace||'') + '</div>' +
+          '<div class="cond-val"><strong>Work:Rest:</strong> ' + escHtml(cond.part1.workRestRatio||'1:1') + '</div>' +
+          '<div class="cond-val"><strong>Rest Activity:</strong> ' + escHtml(cond.part1.restActivity||'') + '</div>' +
+          '<div class="cond-val"><strong>Goal:</strong> ' + escHtml(cond.part1.goal||'') + '</div>' +
+          '</div>';
+        rows += condRow('Break', cond.partBreak || '');
+      }
+      if (cond.part2) {
+        rows += '<div class="cond-subcard"><div class="cond-subcard-lbl">PART 2</div>' +
+          '<div class="cond-val">' + escHtml(cond.part2.sets+'x'+cond.part2.distance) + '</div>' +
+          '<div class="cond-val"><strong>Pace:</strong> ' + escHtml(cond.part2.pace||'') + '</div>' +
+          '<div class="cond-val"><strong>Work:Rest:</strong> ' + escHtml(cond.part2.workRestRatio||'1:1') + '</div>' +
+          '<div class="cond-val"><strong>Rest Activity:</strong> ' + escHtml(cond.part2.restActivity||'') + '</div>' +
+          '</div>';
+      }
+      if (cond.rpe) rows += condRow('RPE', cond.rpe);
+      if (cond.keyRule) rows += condRow('Key Rule', cond.keyRule);
+      rows += condRow('Cooldown', cond.cooldown || '5-10 min easy jog');
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    case 'hill_repeats':
+      rows += condRow('Workout', cond.sets + '×' + cond.duration);
+      rows += condRow('Warmup', cond.warmup || 'Run warmup');
+      rows += condRow('Surface', cond.surface || 'Treadmill 5-6% incline');
+      rows += condRow('Pace', cond.pace || '');
+      rows += condRow('Rest', cond.rest || '');
+      rows += condRow('Rest Activity', cond.restActivity || 'Hop off / walk back to base');
+      rows += condRow('RPE', cond.rpe || '8-9');
+      rows += condRow('Goal', cond.goal || '');
+      rows += condRow('Cooldown', cond.cooldown || '5-10 min easy jog');
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    case 'tempo':
+      rows += condRow('Warmup', cond.warmup || '12 min easy run');
+      rows += condRow('Duration', cond.duration || '');
+      rows += condRow('Pace', cond.pace || '');
+      rows += condRow('RPE', cond.rpe || '7-8');
+      rows += condRow('Effort Cue', cond.effortCue || 'Comfortably hard');
+      rows += condRow('Self Check', cond.selfCheck || 'Could I hold this pace 15 more min? Yes = well paced.');
+      rows += condRow('Cooldown', cond.cooldown || '12 min easy run');
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    case 'fartlek':
+      rows += condRow('Warmup', cond.warmup || '12 min easy run');
+      rows += condRow('Rounds', String(cond.rounds || '') + ' rounds');
+      rows += condRow('Hard', escHtml(cond.hardDuration||'') + ' — ' + escHtml(cond.hardPace||''));
+      rows += condRow('Hard RPE', cond.hardRpe || '8-8.5');
+      rows += condRow('Easy', escHtml(cond.easyDuration||'') + ' — ' + escHtml(cond.easyPace||''));
+      rows += condRow('Easy RPE', cond.easyRpe || '4-5');
+      rows += condRow('Cooldown', cond.cooldown || '12 min easy run');
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    case 'long_run':
+      rows += condRow('Duration', cond.duration || '');
+      rows += condRow('Zone', 'Zone 2 (RPE ' + (cond.rpe||'5-6') + ')');
+      rows += condRow('Pacing', 'Nasal breathing · HR 134-154 BPM · conversational pace');
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    case 'long_run_pickups': case 'long_run_with_pickups':
+      rows += condRow('Total Run', cond.totalDuration || '');
+      rows += condRow('Base Pace', 'Zone 2 (RPE ' + (cond.basePace ? '5-6' : '5-6') + ')');
+      rows += condRow('Pickups', (cond.pickupCount||'') + ' pickups');
+      rows += condRow('Pickup Window', cond.pickupWindow || '');
+      rows += condRow('Pickup Pace', cond.pickupPace || '');
+      rows += condRow('Hold', cond.pickupDuration || '');
+      rows += condRow('Pickup RPE', cond.pickupRpe || '7-8');
+      rows += condRow('Recovery', cond.recovery || 'Slow back to zone 2 after each pickup');
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    case 'long_run_embedded_tempo':
+      rows += condRow('Total', cond.totalDuration || '');
+      (cond.structure||[]).forEach(seg => {
+        rows += condRow(seg.segment, (seg.type||'') + (seg.pace ? ' — ' + seg.pace : '') + (seg.rpe ? ' (RPE '+seg.rpe+')' : ''));
+      });
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    case 'long_run_strong_finish':
+      rows += condRow('Total', cond.totalDuration || '');
+      (cond.structure||[]).forEach(seg => {
+        rows += condRow(seg.segment, (seg.type||'') + (seg.pace ? ' — ' + seg.pace : '') + (seg.rpe ? ' (RPE '+seg.rpe+')' : ''));
+      });
+      if (cond.cooldown) rows += condRow('Cooldown', cond.cooldown);
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    case 'time_trial':
+      rows += condRow('Distance', cond.distance || '');
+      rows += condRow('Warmup', cond.warmup || 'Run warmup');
+      rows += condRow('Effort', cond.effort || 'Max effort');
+      rows += condRow('RPE', cond.rpe || '10 overall');
+      rows += condRow('Pacing', cond.pacing || 'Do not go out too hot');
+      if (cond.cooldown) rows += condRow('Cooldown', cond.cooldown);
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    case 'non_impact_cardio': case 'non_impact':
+      rows += condRow('Options', (cond.options||[]).join(' | '));
+      rows += condRow('Zone', cond.zone || 'Zone 1-2');
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    case 'optional_easy':
+      rows += condRow('Options', (cond.options||[]).join(' | '));
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+      break;
+    default:
+      if (cond.duration) rows += condRow('Duration', cond.duration);
+      if (cond.notes) rows += condRow('Notes', cond.notes);
+  }
+
+  return '<div class="cond-card">' +
+    '<div class="cond-type-strip">' +
+    '<span class="cond-type-label">' + escHtml(typeLabel) + '</span>' +
+    '<button class="cond-done-btn' + (condDone?' done':'') + '" ' +
+    'onclick="wkToggleCond('' + safeDStr + '')">' + (condDone ? '✓ Done' : 'Mark Done') + '</button>' +
+    '</div>' +
+    rows +
+    '</div>';
+}
+
+function condTypeLabel(type) {
+  const MAP = {
+    easy_run:'Easy Run', easy_run_strides:'Easy Run + Strides', easy_run_with_strides:'Easy Run + Strides',
+    repeats:'Repeats', repeats_two_part:'Repeats (2-Part)', hill_repeats:'Hill Repeats',
+    tempo:'Tempo', fartlek:'Fartlek', long_run:'Long Run', long_run_pickups:'Long Run + Pickups',
+    long_run_with_pickups:'Long Run + Pickups', long_run_embedded_tempo:'Long Run + Tempo',
+    long_run_strong_finish:'Long Run + Strong Finish', time_trial:'Time Trial',
+    non_impact_cardio:'Non-Impact Cardio', non_impact:'Non-Impact Cardio',
+    optional_easy:'Optional Easy Conditioning', easy_run_or_non_impact:'Easy Run / Non-Impact',
+    rest:'Rest'
+  };
+  return MAP[type] || type.replace(/_/g,' ').replace(/\w/g,c=>c.toUpperCase());
+}
+
+function condRow(key, val) {
+  if (!val && val !== 0) return '';
+  return '<div class="cond-row"><span class="cond-key">' + escHtml(key) + '</span>' +
+    '<span class="cond-val">' + escHtml(String(val)) + '</span></div>';
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(s) {
+  return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+}
+
+/* ── SET / COND LOG ── */
+window.wkToggleSet = (setKey, dateStr, restSec) => {
+  if (!wkLogs[dateStr]) wkLogs[dateStr] = { sets:{}, weights:{}, condDone:false };
+  wkLogs[dateStr].sets[setKey] = !wkLogs[dateStr].sets[setKey];
+  const done = wkLogs[dateStr].sets[setKey];
+  // Update UI without full re-render
+  const row = document.getElementById('sr-' + setKey);
+  if (row) {
+    row.classList.toggle('done-row', done);
+    const btn = row.querySelector('.set-check-btn');
+    if (btn) btn.classList.toggle('done', done);
+  }
+  saveWkLog(dateStr);
+  if (done) startRestTimer(restSec);
+};
+
+window.wkSaveWeight = (setKey, dateStr, val) => {
+  if (!wkLogs[dateStr]) wkLogs[dateStr] = { sets:{}, weights:{}, condDone:false };
+  if (!wkLogs[dateStr].weights) wkLogs[dateStr].weights = {};
+  wkLogs[dateStr].weights[setKey] = val;
+  saveWkLog(dateStr);
+};
+
+window.wkToggleCond = (dateStr) => {
+  if (!wkLogs[dateStr]) wkLogs[dateStr] = { sets:{}, weights:{}, condDone:false };
+  wkLogs[dateStr].condDone = !wkLogs[dateStr].condDone;
+  saveWkLog(dateStr);
+  renderWorkouts();
+};
+
+/* ── REST TIMER ── */
+function startRestTimer(sec) {
+  stopRestTimer();
+  restTimerSecs = sec;
+  updateRestTimerDisplay();
+  document.getElementById('rest-timer-bar').classList.add('visible');
+  restTimerInterval = setInterval(() => {
+    restTimerSecs--;
+    if (restTimerSecs <= 0) {
+      stopRestTimer();
+      if (navigator.vibrate) navigator.vibrate([200,100,200]);
+    } else {
+      updateRestTimerDisplay();
+    }
+  }, 1000);
+}
+
+window.skipRestTimer = () => stopRestTimer();
+
+function stopRestTimer() {
+  if (restTimerInterval) { clearInterval(restTimerInterval); restTimerInterval = null; }
+  document.getElementById('rest-timer-bar').classList.remove('visible');
+}
+
+function updateRestTimerDisplay() {
+  const m = Math.floor(restTimerSecs / 60);
+  const s = restTimerSecs % 60;
+  const el = document.getElementById('rest-timer-count');
+  if (el) el.textContent = m + ':' + String(s).padStart(2,'0');
+}
+
+/* ── FIREBASE WORKOUT LOG ── */
+function saveWkLog(dateStr) {
+  const log = wkLogs[dateStr];
+  try { localStorage.setItem('mt_workout_'+dateStr, JSON.stringify(log)); } catch(e){}
+  if (fbDb) {
+    import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js').then(({ref, set}) => {
+      set(ref(fbDb, 'workoutLogs/' + dateStr), log).catch(()=>{});
+    });
+  }
+}
+
+function loadWkLogForDate(dateStr) {
+  try {
+    const saved = localStorage.getItem('mt_workout_'+dateStr);
+    if (saved) wkLogs[dateStr] = JSON.parse(saved);
+  } catch(e){}
+  if (fbDb) {
+    import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js').then(({ref, onValue}) => {
+      onValue(ref(fbDb, 'workoutLogs/' + dateStr), snap => {
+        const d = snap.val();
+        if (d) { wkLogs[dateStr] = d; renderWorkouts(); }
+      }, { onlyOnce: true });
+    });
+  }
+}
+
 /* ══ CHAT HISTORY PERSISTENCE ══ */
 function saveChatHistory() {
   const key = 'mt_chat_' + TODAY.replace(/ /g,'-');
@@ -1617,7 +2269,14 @@ loadChatHistory();
 scheduleChatReset();
 checkWeighIn();
 setInterval(renderDate,60000);
+renderWorkouts();
+loadWkLogForDate(wkDateStr(getCurrentProgDay()));
 initFirebase();
 </script>
+<div class="rest-timer-bar" id="rest-timer-bar">
+  <div class="rest-timer-label">Rest</div>
+  <div class="rest-timer-count" id="rest-timer-count">0:00</div>
+  <button class="rest-timer-skip" onclick="skipRestTimer()">Skip</button>
+</div>
 </body>
 </html>
