@@ -256,6 +256,7 @@ header{background:linear-gradient(135deg,var(--lavender) 0%,#4a2d6e 40%,#6b3d5e 
 .cond-subcard-lbl{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
   font-family:var(--body);margin-bottom:4px;}
 .cond-rest-note{font-size:10px;color:var(--rose);font-family:var(--body);font-style:italic;margin-top:2px;}
+.cond-reps-hdr{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--lavender);font-family:var(--body);font-weight:500;padding:8px 12px 4px;border-top:1px solid var(--border);margin-top:4px;}
 .wk-rest-day{text-align:center;padding:48px 16px;color:var(--muted2);font-family:var(--serif);
   font-size:18px;font-style:italic;}
 .wk-pre-start{text-align:center;padding:40px 16px;}
@@ -1872,20 +1873,70 @@ function renderSetRow(setKey, setIdx, repsPresc, savedWeight, done, restSec, dat
     "</div>";
 }
 
+const REPEAT_TYPES = ["repeats", "repeats_two_part", "hill_repeats"];
+
 function renderConditioningBlock(cond, condDone, dateStr) {
   if (!cond || cond.type === "rest") return "<div class=\"wk-rest-day\">Rest</div>";
   const typeLabel = condTypeLabel(cond.type);
-  let rows = buildCondRows(cond);
+  const isRepeatType = REPEAT_TYPES.includes(cond.type);
+  const log = wkLogs[dateStr] || { sets:{} };
+  let rows = buildCondRows(cond, log, dateStr);
+
+  const doneBtn = isRepeatType ? "" :
+    "<button class=\"cond-done-btn" + (condDone ? " done" : "") + "\" " +
+    "onclick=\"wkToggleCond('" + dateStr + "')\">" + (condDone ? "✓ Done" : "Mark Done") + "</button>";
 
   return "<div class=\"cond-card\">" +
     "<div class=\"cond-type-strip\">" +
     "<span class=\"cond-type-label\">" + escH(typeLabel) + "</span>" +
-    "<button class=\"cond-done-btn" + (condDone ? " done" : "") + "\" " +
-    "onclick=\"wkToggleCond('" + dateStr + "')\">" + (condDone ? "✓ Done" : "Mark Done") + "</button>" +
+    doneBtn +
     "</div>" + rows + "</div>";
 }
 
-function buildCondRows(cond) {
+function renderRepeatRows(prefix, total, distOrDur, log, dateStr, restSec) {
+  let html = "";
+  for (var i = 0; i < total; i++) {
+    var key = "cond_" + prefix + "_" + i;
+    var done = !!(log.sets && log.sets[key]);
+    html += "<div class=\"set-row" + (done ? " done-row" : "") + "\" id=\"sr-" + key + "\">" +
+      "<span class=\"set-num-badge\">" + (i + 1) + "</span>" +
+      "<span class=\"set-reps-lbl\" style=\"text-align:left;padding-left:6px;\">" + escH(distOrDur) + "</span>" +
+      "<button class=\"set-check-btn" + (done ? " done" : "") + "\" " +
+      "onclick=\"wkToggleRep('" + key + "','" + dateStr + "'," + restSec + ")\" " +
+      "aria-label=\"Mark rep done\">✓</button>" +
+      "</div>";
+  }
+  return html;
+}
+
+function repRestSec(distance) {
+  if (!distance) return 90;
+  var d = String(distance).toLowerCase();
+  if (d.includes("1k") || d.includes("1,0") || d === "1000m") return 240;
+  if (d.includes("800")) return 200;
+  if (d.includes("400")) return 100;
+  if (d.includes("mile")) return 420;
+  // hill repeat duration like "1:00"
+  var parts = d.match(/(\d+):(\d+)/);
+  if (parts) return parseInt(parts[1]) * 60 + parseInt(parts[2]);
+  return 90;
+}
+
+window.wkToggleRep = function(key, dateStr, restSec) {
+  if (!wkLogs[dateStr]) wkLogs[dateStr] = { sets:{}, weights:{}, condDone:false };
+  wkLogs[dateStr].sets[key] = !wkLogs[dateStr].sets[key];
+  var done = wkLogs[dateStr].sets[key];
+  var row = document.getElementById("sr-" + key);
+  if (row) {
+    row.classList.toggle("done-row", done);
+    var btn = row.querySelector(".set-check-btn");
+    if (btn) btn.classList.toggle("done", done);
+  }
+  saveWkLog(dateStr);
+  if (done) startRestTimer(restSec);
+};
+
+function buildCondRows(cond, log, dateStr) {
   let rows = "";
   function row(k, v) {
     if (!v && v !== 0) return "";
@@ -1908,50 +1959,51 @@ function buildCondRows(cond) {
       rows += row("Notes", cond.notes);
       break;
     case "repeats":
-      rows += row("Workout", cond.sets + "×" + cond.distance);
       rows += row("Warmup", cond.warmup || "Run warmup (strides)");
       rows += row("Pace", cond.pace);
       rows += row("Work:Rest", (cond.workRestRatio||"1:1") + " — " + (cond.restDuration||"rest = lap time"));
       rows += row("Rest Activity", cond.restActivity);
       rows += row("RPE", cond.rpe);
       rows += row("Goal", cond.goal);
-      rows += row("Cooldown", cond.cooldown || "5-10 min easy jog");
       rows += row("Key Rule", cond.keyRule);
       rows += row("Notes", cond.notes);
+      rows += "<div class=\"cond-reps-hdr\">REPS — " + escH(cond.sets + "×" + cond.distance) + "</div>";
+      rows += renderRepeatRows("rep", cond.sets, cond.distance, log, dateStr, repRestSec(cond.distance));
+      rows += row("Cooldown", cond.cooldown || "5-10 min easy jog");
       break;
     case "repeats_two_part":
       rows += row("Warmup", cond.warmup || "Run warmup (strides)");
+      rows += row("RPE", cond.rpe);
+      rows += row("Key Rule", cond.keyRule);
       if (cond.part1) {
-        rows += "<div class=\"cond-subcard\"><div class=\"cond-subcard-lbl\">PART 1</div>" +
-          "<div class=\"cond-val\">" + escH(cond.part1.sets + "×" + cond.part1.distance) + "</div>" +
-          (cond.part1.pace ? "<div class=\"cond-val\">Pace: " + escH(cond.part1.pace) + "</div>" : "") +
-          "<div class=\"cond-val\">Work:Rest: " + escH(cond.part1.workRestRatio||"1:1") + "</div>" +
-          "<div class=\"cond-val\">Rest: " + escH(cond.part1.restActivity||"") + "</div></div>";
+        rows += "<div class=\"cond-reps-hdr\">PART 1 — " + escH(cond.part1.sets + "×" + cond.part1.distance) + "</div>";
+        rows += row("Pace", cond.part1.pace);
+        rows += row("Work:Rest", cond.part1.workRestRatio||"1:1");
+        rows += row("Rest Activity", cond.part1.restActivity);
+        rows += renderRepeatRows("p1rep", cond.part1.sets, cond.part1.distance, log, dateStr, repRestSec(cond.part1.distance));
         rows += row("Break", cond.partBreak);
       }
       if (cond.part2) {
-        rows += "<div class=\"cond-subcard\"><div class=\"cond-subcard-lbl\">PART 2</div>" +
-          "<div class=\"cond-val\">" + escH(cond.part2.sets + "×" + cond.part2.distance) + "</div>" +
-          (cond.part2.pace ? "<div class=\"cond-val\">Pace: " + escH(cond.part2.pace) + "</div>" : "") +
-          "<div class=\"cond-val\">Work:Rest: " + escH(cond.part2.workRestRatio||"1:1") + "</div>" +
-          "<div class=\"cond-val\">Rest: " + escH(cond.part2.restActivity||"") + "</div></div>";
+        rows += "<div class=\"cond-reps-hdr\">PART 2 — " + escH(cond.part2.sets + "×" + cond.part2.distance) + "</div>";
+        rows += row("Pace", cond.part2.pace);
+        rows += row("Work:Rest", cond.part2.workRestRatio||"1:1");
+        rows += row("Rest Activity", cond.part2.restActivity);
+        rows += renderRepeatRows("p2rep", cond.part2.sets, cond.part2.distance, log, dateStr, repRestSec(cond.part2.distance));
       }
-      rows += row("RPE", cond.rpe);
-      rows += row("Key Rule", cond.keyRule);
       rows += row("Cooldown", cond.cooldown || "5-10 min easy jog");
       rows += row("Notes", cond.notes);
       break;
     case "hill_repeats":
-      rows += row("Workout", cond.sets + "×" + cond.duration);
       rows += row("Warmup", cond.warmup || "Run warmup");
       rows += row("Surface", cond.surface || "Treadmill 5-6% incline");
       rows += row("Pace", cond.pace);
-      rows += row("Rest", cond.rest);
       rows += row("Rest Activity", cond.restActivity || "Hop off / walk back");
       rows += row("RPE", cond.rpe || "8-9");
       rows += row("Goal", cond.goal);
-      rows += row("Cooldown", cond.cooldown || "5-10 min easy jog");
       rows += row("Notes", cond.notes);
+      rows += "<div class=\"cond-reps-hdr\">REPS — " + escH(cond.sets + "×" + cond.duration) + "</div>";
+      rows += renderRepeatRows("hrep", cond.sets, cond.duration, log, dateStr, repRestSec(cond.rest || cond.duration));
+      rows += row("Cooldown", cond.cooldown || "5-10 min easy jog");
       break;
     case "tempo":
       rows += row("Warmup", cond.warmup || "12 min easy run");
