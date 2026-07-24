@@ -15,7 +15,7 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
+        max_tokens: Math.min(body.max_tokens || 1000, 8192),
         system: body.system,
         tools: [{ type: 'web_search_20250305', name: 'web_search' }],
         messages: body.messages
