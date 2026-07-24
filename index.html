@@ -2533,7 +2533,7 @@ async function mpCallClaude(system, userMsg) {
   const res = await fetch("/.netlify/functions/claude", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ system: system, max_tokens: 4096, messages: [{ role: "user", content: userMsg }] })
+    body: JSON.stringify({ system: system, max_tokens: 4096, fast: true, no_tools: true, messages: [{ role: "user", content: userMsg }] })
   });
   const data = await res.json();
   let text = "";

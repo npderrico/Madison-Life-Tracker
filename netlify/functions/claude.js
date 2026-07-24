@@ -14,10 +14,10 @@ exports.handler = async (event) => {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
+        model: body.fast ? 'claude-haiku-4-5-20251001' : 'claude-sonnet-4-6',
         max_tokens: Math.min(body.max_tokens || 1000, 8192),
         system: body.system,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        ...(body.no_tools ? {} : { tools: [{ type: 'web_search_20250305', name: 'web_search' }] }),
         messages: body.messages
       })
     });
